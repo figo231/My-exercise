@@ -1,9 +1,11 @@
+index.html
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>محاكاة إلكترونية</title>
+  <title>بدانا 😈</title>
 
   <style>
     * {
@@ -97,6 +99,7 @@
     }
 
     .warning {
+      text-shadow: 0 0 15px #ff0000;
       margin-top: 20px;
       font-size: 22px;
       color: #ff4444;
@@ -159,7 +162,7 @@
   </div>
 
   <div class="prank" id="prank">
-    😂 دي مجرد محاكاة للهزار وبس 😂
+     تم الاختراق بنجاح بمسي عليك يا قلبي 😉😈 
   </div>
 
   <div class="footer">
@@ -168,7 +171,11 @@
 </div>
 
 <audio id="beep" preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+  <source src="https://assets.mixkit.co/active_storage/sfx/209/209-preview.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="alarm" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -176,6 +183,7 @@
   const warning = document.getElementById('warning');
   const prank = document.getElementById('prank');
   const beep = document.getElementById('beep');
+  const alarm = document.getElementById('alarm');
 
   const lines = [
     'بدء تشغيل النظام...',
@@ -187,7 +195,7 @@
     'محاكاة الوصول...',
     'تشغيل بروتوكول الحماية...',
     'فحص الأمان...',
-    'اكتمل التحليل الوهمي بنجاح.'
+    'اكتمل التحليل  بنجاح.'
   ];
 
   let index = 0;
@@ -207,6 +215,9 @@
       setTimeout(addLine, 1200);
     } else {
       warning.style.display = 'block';
+
+      alarm.volume = 1;
+      alarm.play().catch(() => {});
 
       setTimeout(() => {
         prank.style.display = 'block';
