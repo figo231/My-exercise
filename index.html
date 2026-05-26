@@ -1,40 +1,421 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> الهكر</title>
-    <style>
-        body {
-            background-color: black;
-            color: green;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            padding: 50px;
-        }
-        .hacker-image {
-            width: 200px;
-            height: 200px;
-            background: url('https://sl.bing.net/gaP7OEiEMPQ') no-repeat center;
-            margin: 0 auto 20px;
-        }
-        .message {
-            font-size: 24px;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure AI System</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }body {
+  background: #0b1020;
+  overflow: hidden;
+  color: white;
+  height: 100vh;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #050816;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 9999;
+  transition: opacity 1s ease;
+}
+
+.loader {
+  width: 220px;
+  height: 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.loader span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg,#00f0ff,#00ff88);
+  animation: load 4s linear forwards;
+}
+
+@keyframes load {
+  100% {
+    width: 100%;
+  }
+}
+
+.main {
+  display: none;
+  height: 100vh;
+  padding: 30px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #00f0ff;
+  text-shadow: 0 0 15px #00f0ff;
+}
+
+.status {
+  padding: 10px 18px;
+  border-radius: 15px;
+  background: rgba(0,255,136,0.15);
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  font-size: 14px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  transition: 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #00f0ff;
+  box-shadow: 0 0 25px rgba(0,240,255,0.4);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg,transparent,rgba(255,255,255,0.05),transparent);
+  transform: rotate(25deg);
+  animation: shine 5s infinite;
+}
+
+@keyframes shine {
+  100% {
+    top: 100%;
+  }
+}
+
+.card h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #00f0ff;
+}
+
+.big-number {
+  font-size: 42px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.small-text {
+  opacity: 0.7;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.terminal {
+  background: #050816;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: monospace;
+  color: #00ff88;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.line {
+  margin-bottom: 10px;
+  animation: typing 0.5s linear;
+}
+
+@keyframes typing {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.progress {
+  width: 100%;
+  height: 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progress span {
+  display: block;
+  width: 87%;
+  height: 100%;
+  background: linear-gradient(90deg,#00f0ff,#00ff88);
+  animation: progressMove 3s infinite alternate;
+}
+
+@keyframes progressMove {
+  from {
+    width: 45%;
+  }
+  to {
+    width: 92%;
+  }
+}
+
+.btn {
+  margin-top: 18px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg,#00f0ff,#0077ff);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(0,240,255,0.5);
+}
+
+.notification {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid #00ff88;
+  padding: 15px 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(200px);
+  transition: 0.5s ease;
+  z-index: 1000;
+}
+
+.notification.show {
+  transform: translateY(0);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: #00ff88;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media(max-width:768px){
+  .main {
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .topbar {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .big-number {
+    font-size: 34px;
+  }
+}
+
+  </style>
 </head>
-<body>
-    <div class="hacker-image"></div>
-    <div class="message">
-        جاري سحب جميع البيانات  😈<br>
-    </div>
-    <script>
-   alert( " 😈 كيمو بيمسي عليك  ")
-</script>
-</body>
+<body><canvas id="bg"></canvas>
+
+<div class="loading-screen" id="loading">
+  <h1>Initializing Secure AI System...</h1>
+  <div class="loader"><span></span></div>
+</div><div class="main" id="main">
+  <div class="topbar">
+    <div class="logo">SECURE AI DASHBOARD</div>
+    <div class="status">● SYSTEM ACTIVE</div>
+  </div>  <div class="grid"><div class="card">
+  <h2>Network Status</h2>
+  <div class="big-number">98%</div>
+  <div class="small-text">All systems operating normally</div>
+  <div class="progress"><span></span></div>
+</div>
+
+<div class="card">
+  <h2>AI Performance</h2>
+  <div class="big-number">12.4TB</div>
+  <div class="small-text">Processed data today</div>
+  <button class="btn" onclick="fakeAction()">Run Deep Scan</button>
+</div>
+
+<div class="card">
+  <h2>Security Terminal</h2>
+  <div class="terminal" id="terminal"></div>
+</div>
+
+<div class="card">
+  <h2>Active Users</h2>
+  <div class="big-number" id="users">0</div>
+  <div class="small-text">Connected worldwide</div>
+</div>
+
+  </div>
+</div><div class="notification" id="notify">
+  <div class="dot"></div>
+  <div>Secure connection established successfully.</div>
+</div><script>
+
+  setTimeout(() => {
+    document.getElementById('loading').style.opacity = '0';
+
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('notify').classList.add('show');
+      }, 1000);
+
+    }, 1000);
+
+  }, 4000);
+
+  const terminal = document.getElementById('terminal');
+
+  const messages = [
+    '[SYSTEM] Initializing AI core...',
+    '[SECURITY] Firewall enabled.',
+    '[DATABASE] Sync completed.',
+    '[NETWORK] Encrypted channel active.',
+    '[AI] Machine learning models loaded.',
+    '[STATUS] No threats detected.'
+  ];
+
+  let index = 0;
+
+  function addLine() {
+    if(index < messages.length){
+      const line = document.createElement('div');
+      line.className = 'line';
+      line.textContent = messages[index];
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+      index++;
+    }
+  }
+
+  setInterval(addLine, 1000);
+
+  let users = 1024;
+  const userElement = document.getElementById('users');
+
+  setInterval(() => {
+    users += Math.floor(Math.random()*10);
+    userElement.innerText = users.toLocaleString();
+  }, 1500);
+
+  function fakeAction(){
+    alert('Deep Scan Completed Successfully ✔');
+  }
+
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+
+  for(let i=0;i<100;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      radius: Math.random()*2,
+      speed: Math.random()*0.5
+    });
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = 'rgba(0,240,255,0.7)';
+
+    particles.forEach(p=>{
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+      ctx.fill();
+
+      p.y += p.speed;
+
+      if(p.y > canvas.height){
+        p.y = 0;
+        p.x = Math.random()*canvas.width;
+      }
+    });
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener('resize',()=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+</script></body>
 </html>
