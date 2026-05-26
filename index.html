@@ -1,421 +1,266 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Secure AI System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>Cyber Simulation</title>
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-    }body {
-  background: #0b1020;
-  overflow: hidden;
-  color: white;
-  height: 100vh;
-}
+      font-family: Arial, sans-serif;
+    }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
+    body {
+      background: #050505;
+      overflow: hidden;
+      color: white;
+      height: 100vh;
+    }
 
-.loading-screen {
-  position: fixed;
-  inset: 0;
-  background: #050816;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 9999;
-  transition: opacity 1s ease;
-}
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
 
-.loader {
-  width: 220px;
-  height: 10px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  overflow: hidden;
-  margin-top: 20px;
-}
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0,0,0,0.3), rgba(0,0,0,0.95));
+      z-index: 1;
+    }
 
-.loader span {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: linear-gradient(90deg,#00f0ff,#00ff88);
-  animation: load 4s linear forwards;
-}
+    .content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
 
-@keyframes load {
-  100% {
-    width: 100%;
-  }
-}
+    .title {
+      font-size: 42px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #00ff99, #00ccff, #ff0033);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 2s infinite alternate;
+    }
 
-.main {
-  display: none;
-  height: 100vh;
-  padding: 30px;
-}
+    @keyframes glow {
+      from {
+        filter: drop-shadow(0 0 5px #00ff99);
+      }
+      to {
+        filter: drop-shadow(0 0 20px #ff0033);
+      }
+    }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
+    .terminal {
+      width: 95%;
+      max-width: 800px;
+      height: 350px;
+      background: rgba(0,0,0,0.75);
+      border: 1px solid rgba(0,255,170,0.4);
+      border-radius: 15px;
+      padding: 20px;
+      overflow: hidden;
+      text-align: right;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 25px rgba(0,255,170,0.2);
+    }
 
-.logo {
-  font-size: 28px;
-  font-weight: 700;
-  color: #00f0ff;
-  text-shadow: 0 0 15px #00f0ff;
-}
+    .line {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #00ff99;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
 
-.status {
-  padding: 10px 18px;
-  border-radius: 15px;
-  background: rgba(0,255,136,0.15);
-  border: 1px solid #00ff88;
-  color: #00ff88;
-  font-size: 14px;
-  animation: pulse 2s infinite;
-}
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
-@keyframes pulse {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
+    .warning {
+      margin-top: 20px;
+      font-size: 22px;
+      color: #ff4444;
+      display: none;
+      animation: blink 0.8s infinite;
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-  gap: 20px;
-}
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  border-radius: 24px;
-  padding: 22px;
-  box-shadow: 0 0 25px rgba(0,0,0,0.3);
-  transition: 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
+    .prank {
+      margin-top: 25px;
+      display: none;
+      font-size: 26px;
+      color: #ffffff;
+      background: rgba(255,255,255,0.08);
+      padding: 15px 25px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
 
-.card:hover {
-  transform: translateY(-8px);
-  border-color: #00f0ff;
-  box-shadow: 0 0 25px rgba(0,240,255,0.4);
-}
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      z-index: 2;
+    }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: -100%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg,transparent,rgba(255,255,255,0.05),transparent);
-  transform: rotate(25deg);
-  animation: shine 5s infinite;
-}
+    @media (max-width: 600px) {
+      .title {
+        font-size: 30px;
+      }
 
-@keyframes shine {
-  100% {
-    top: 100%;
-  }
-}
+      .terminal {
+        height: 300px;
+      }
 
-.card h2 {
-  font-size: 18px;
-  margin-bottom: 15px;
-  color: #00f0ff;
-}
-
-.big-number {
-  font-size: 42px;
-  font-weight: bold;
-  color: #fff;
-}
-
-.small-text {
-  opacity: 0.7;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-.terminal {
-  background: #050816;
-  border-radius: 15px;
-  padding: 15px;
-  font-family: monospace;
-  color: #00ff88;
-  height: 180px;
-  overflow: hidden;
-  position: relative;
-}
-
-.line {
-  margin-bottom: 10px;
-  animation: typing 0.5s linear;
-}
-
-@keyframes typing {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.progress {
-  width: 100%;
-  height: 12px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 15px;
-}
-
-.progress span {
-  display: block;
-  width: 87%;
-  height: 100%;
-  background: linear-gradient(90deg,#00f0ff,#00ff88);
-  animation: progressMove 3s infinite alternate;
-}
-
-@keyframes progressMove {
-  from {
-    width: 45%;
-  }
-  to {
-    width: 92%;
-  }
-}
-
-.btn {
-  margin-top: 18px;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg,#00f0ff,#0077ff);
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s ease;
-  width: 100%;
-}
-
-.btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 20px rgba(0,240,255,0.5);
-}
-
-.notification {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  background: rgba(0,0,0,0.8);
-  border: 1px solid #00ff88;
-  padding: 15px 20px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transform: translateY(200px);
-  transition: 0.5s ease;
-  z-index: 1000;
-}
-
-.notification.show {
-  transform: translateY(0);
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  background: #00ff88;
-  border-radius: 50%;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0.3;
-  }
-}
-
-@media(max-width:768px){
-  .main {
-    padding: 20px;
-    overflow-y: auto;
-  }
-
-  .topbar {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .big-number {
-    font-size: 34px;
-  }
-}
-
+      .line {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
-<body><canvas id="bg"></canvas>
+<body>
 
-<div class="loading-screen" id="loading">
-  <h1>Initializing Secure AI System...</h1>
-  <div class="loader"><span></span></div>
-</div><div class="main" id="main">
-  <div class="topbar">
-    <div class="logo">SECURE AI DASHBOARD</div>
-    <div class="status">● SYSTEM ACTIVE</div>
-  </div>  <div class="grid"><div class="card">
-  <h2>Network Status</h2>
-  <div class="big-number">98%</div>
-  <div class="small-text">All systems operating normally</div>
-  <div class="progress"><span></span></div>
-</div>
+<canvas id="matrix"></canvas>
+<div class="overlay"></div>
 
-<div class="card">
-  <h2>AI Performance</h2>
-  <div class="big-number">12.4TB</div>
-  <div class="small-text">Processed data today</div>
-  <button class="btn" onclick="fakeAction()">Run Deep Scan</button>
-</div>
+<div class="content">
+  <div class="title">محاكاة نظام إلكتروني</div>
 
-<div class="card">
-  <h2>Security Terminal</h2>
   <div class="terminal" id="terminal"></div>
-</div>
 
-<div class="card">
-  <h2>Active Users</h2>
-  <div class="big-number" id="users">0</div>
-  <div class="small-text">Connected worldwide</div>
-</div>
-
+  <div class="warning" id="warning">
+    جاري تحليل النظام...
   </div>
-</div><div class="notification" id="notify">
-  <div class="dot"></div>
-  <div>Secure connection established successfully.</div>
-</div><script>
 
-  setTimeout(() => {
-    document.getElementById('loading').style.opacity = '0';
+  <div class="prank" id="prank">
+    😂 دي مجرد محاكاة للهزار وبس 😂
+  </div>
 
-    setTimeout(() => {
-      document.getElementById('loading').style.display = 'none';
-      document.getElementById('main').style.display = 'block';
+  <div class="footer">
+    CYBER SIMULATION UI
+  </div>
+</div>
 
-      setTimeout(() => {
-        document.getElementById('notify').classList.add('show');
-      }, 1000);
+<audio id="beep" preload="auto">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+</audio>
 
-    }, 1000);
-
-  }, 4000);
-
+<script>
   const terminal = document.getElementById('terminal');
+  const warning = document.getElementById('warning');
+  const prank = document.getElementById('prank');
+  const beep = document.getElementById('beep');
 
-  const messages = [
-    '[SYSTEM] Initializing AI core...',
-    '[SECURITY] Firewall enabled.',
-    '[DATABASE] Sync completed.',
-    '[NETWORK] Encrypted channel active.',
-    '[AI] Machine learning models loaded.',
-    '[STATUS] No threats detected.'
+  const lines = [
+    'بدء تشغيل النظام...',
+    'فحص الاتصال...',
+    'تحميل البيانات الوهمية...',
+    'تحليل الملفات...',
+    'جاري فحص الشبكة...',
+    'اكتشاف النظام...',
+    'محاكاة الوصول...',
+    'تشغيل بروتوكول الحماية...',
+    'فحص الأمان...',
+    'اكتمل التحليل الوهمي بنجاح.'
   ];
 
   let index = 0;
 
   function addLine() {
-    if(index < messages.length){
-      const line = document.createElement('div');
-      line.className = 'line';
-      line.textContent = messages[index];
-      terminal.appendChild(line);
+    if(index < lines.length) {
+      const div = document.createElement('div');
+      div.classList.add('line');
+      div.textContent = '> ' + lines[index];
+      terminal.appendChild(div);
       terminal.scrollTop = terminal.scrollHeight;
+
+      beep.currentTime = 0;
+      beep.play().catch(() => {});
+
       index++;
+      setTimeout(addLine, 1200);
+    } else {
+      warning.style.display = 'block';
+
+      setTimeout(() => {
+        prank.style.display = 'block';
+      }, 4000);
     }
   }
 
-  setInterval(addLine, 1000);
+  addLine();
 
-  let users = 1024;
-  const userElement = document.getElementById('users');
-
-  setInterval(() => {
-    users += Math.floor(Math.random()*10);
-    userElement.innerText = users.toLocaleString();
-  }, 1500);
-
-  function fakeAction(){
-    alert('Deep Scan Completed Successfully ✔');
-  }
-
-  const canvas = document.getElementById('bg');
+  // MATRIX EFFECT
+  const canvas = document.getElementById('matrix');
   const ctx = canvas.getContext('2d');
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const particles = [];
+  const chars = '01アカサタナハマヤャラワガザダバパ';
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
 
-  for(let i=0;i<100;i++){
-    particles.push({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      radius: Math.random()*2,
-      speed: Math.random()*0.5
-    });
+  const drops = [];
+
+  for(let i = 0; i < columns; i++) {
+    drops[i] = 1;
   }
 
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    ctx.fillStyle = 'rgba(0,240,255,0.7)';
+    for(let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)];
 
-    particles.forEach(p=>{
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-      ctx.fill();
+      const colors = ['#00ff99','#00ccff','#ff0033'];
+      ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+      ctx.font = fontSize + 'px monospace';
 
-      p.y += p.speed;
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-      if(p.y > canvas.height){
-        p.y = 0;
-        p.x = Math.random()*canvas.width;
+      if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
-    });
 
-    requestAnimationFrame(animate);
+      drops[i]++;
+    }
   }
 
-  animate();
+  setInterval(draw, 35);
 
-  window.addEventListener('resize',()=>{
+  window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   });
+</script>
 
-</script></body>
+</body>
 </html>
