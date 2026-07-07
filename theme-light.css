@@ -1,36 +1,45 @@
 /* Light mode overrides.
    Activated when <html> has class="light" (toggled by the button in index.html).
-   Uses !important + descendant selectors so it works without touching app.bundle.js. */
+   Uses !important + descendant selectors so it works without touching app.bundle.js.
+   Palette: crisp white surfaces + charcoal text + the same warm gold accent
+   used in dark mode, for a consistent premium look in both themes. */
 
-html.light body { background: #F3F4F6 !important; }
+html.light body { background: #FAF9F7 !important; }
 
 /* Root app wrapper: its background is an inline style, so this overrides it. */
 html.light div[dir="rtl"][lang="ar"] {
-  background: radial-gradient(1200px 600px at 50% -10%, #eef7d8 0%, #F3F4F6 55%) !important;
+  background: radial-gradient(1200px 600px at 50% -10%, #f3ecd8 0%, #FAF9F7 55%) !important;
 }
 
 /* Surfaces */
-html.light .bg-page { background-color: #F3F4F6 !important; }
+html.light .bg-page { background-color: #FAF9F7 !important; }
 html.light .bg-panel2 { background-color: #FFFFFF !important; }
-html.light .bg-panel3-90 { background-color: hsla(0, 0%, 100%, 0.85) !important; }
+html.light .bg-panel3-90 { background-color: hsla(0, 0%, 100%, 0.88) !important; }
 html.light .bg-card { background-color: #FFFFFF !important; }
 html.light .grad-panel {
-  background: linear-gradient(to bottom right, #FFFFFF, #F1F2F4) !important;
+  background: linear-gradient(to bottom right, #FFFFFF, #F3F1EC) !important;
 }
 
 /* Text */
-html.light .text-primary { color: #14171A !important; }
-html.light .text-muted { color: #6B7076 !important; }
-html.light .text-faint { color: #C7CBD1 !important; }
+html.light .text-primary { color: #1C1B19 !important; }
+html.light .text-muted { color: #6B655C !important; }
+html.light .text-faint { color: #D8D3C8 !important; }
+
+/* Cards get a soft, expensive-looking edge + shadow instead of a flat line */
+html.light .bg-card,
+html.light .grad-panel {
+  box-shadow: 0 1px 2px rgba(28, 27, 25, 0.04), 0 8px 24px -12px rgba(28, 27, 25, 0.12) !important;
+}
 
 /* Borders / subtle overlays: flip "white at low opacity" to "black at low opacity" */
-html.light .border-white\/5 { border-color: rgba(0, 0, 0, 0.06) !important; }
-html.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
-html.light .border-white\/15 { border-color: rgba(0, 0, 0, 0.15) !important; }
-html.light .bg-white\/5 { background-color: rgba(0, 0, 0, 0.04) !important; }
-html.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
+html.light .border-white\/5 { border-color: rgba(28, 27, 25, 0.06) !important; }
+html.light .border-white\/10 { border-color: rgba(28, 27, 25, 0.1) !important; }
+html.light .border-white\/15 { border-color: rgba(28, 27, 25, 0.15) !important; }
+html.light .bg-white\/5 { background-color: rgba(28, 27, 25, 0.04) !important; }
+html.light .bg-white\/10 { background-color: rgba(28, 27, 25, 0.06) !important; }
 
-/* Scrollbar track (kept transparent either way, no change needed) */
+/* Text painted on top of the gold accent stays dark for contrast either way */
+html.light .text-ink { color: #1C1B19 !important; }
 
 /* The floating theme-toggle button itself */
 #theme-toggle-btn {
@@ -42,7 +51,7 @@ html.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
   height: 44px;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #16191D;
+  background: #17181C;
   color: #F5F6F7;
   display: flex;
   align-items: center;
@@ -53,6 +62,8 @@ html.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
 }
 html.light #theme-toggle-btn {
   background: #FFFFFF;
-  color: #14171A;
-  border-color: rgba(0, 0, 0, 0.1);
+  color: #1C1B19;
+  border-color: rgba(28, 27, 25, 0.1);
+  box-shadow: 0 1px 2px rgba(28,27,25,0.05), 0 8px 24px -10px rgba(28,27,25,0.15);
 }
+

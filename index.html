@@ -61,5 +61,29 @@
     sync();
   })();
 </script>
+
+<!-- Fix: whenever a bottom-sheet modal (exercise management, settings, etc.)
+     gets added to the page, make sure its inner panel starts scrolled to the
+     very top, so the header and first button are always visible immediately. -->
+<script>
+  (function () {
+    var obs = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        m.addedNodes.forEach(function (node) {
+          if (node.nodeType !== 1) return;
+          var overlay = node.matches && node.matches(".fixed.inset-0")
+            ? node
+            : (node.querySelector ? node.querySelector(".fixed.inset-0") : null);
+          if (overlay) {
+            var panel = overlay.querySelector(".overflow-y-auto") || overlay.firstElementChild;
+            if (panel) panel.scrollTop = 0;
+            window.scrollTo(0, 0);
+          }
+        });
+      });
+    });
+    obs.observe(document.getElementById("root"), { childList: true, subtree: true });
+  })();
+</script>
 </body>
 </html>
