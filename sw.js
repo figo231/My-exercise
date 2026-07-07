@@ -1,8 +1,9 @@
-const CACHE_NAME = "gym-tracker-v1";
+const CACHE_NAME = "gym-tracker-v2";
 const ASSETS = [
   "./",
   "./index.html",
   "./app.bundle.js",
+  "./style.css",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
