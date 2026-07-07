@@ -21,6 +21,14 @@
 <!-- Tailwind utility classes used by the app, pre-built as a local file
      (no CDN / no internet needed — works fully offline) -->
 <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="theme-light.css" />
+
+<!-- Apply saved theme before paint, so there's no flash of the wrong theme -->
+<script>
+  if (localStorage.getItem("theme") === "light") {
+    document.documentElement.classList.add("light");
+  }
+</script>
 </head>
 <body>
 <div id="root"></div>
@@ -33,6 +41,25 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => {});
   }
+</script>
+
+<!-- Dark/Light mode toggle button (sits on top of the app, doesn't touch app.bundle.js) -->
+<button id="theme-toggle-btn" aria-label="تبديل الوضع الداكن/الفاتح">🌙</button>
+<script>
+  (function () {
+    var btn = document.getElementById("theme-toggle-btn");
+    function sync() {
+      var isLight = document.documentElement.classList.contains("light");
+      btn.textContent = isLight ? "☀️" : "🌙";
+    }
+    btn.addEventListener("click", function () {
+      document.documentElement.classList.toggle("light");
+      var isLight = document.documentElement.classList.contains("light");
+      localStorage.setItem("theme", isLight ? "light" : "dark");
+      sync();
+    });
+    sync();
+  })();
 </script>
 </body>
 </html>

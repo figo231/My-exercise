@@ -1,0 +1,58 @@
+/* Light mode overrides.
+   Activated when <html> has class="light" (toggled by the button in index.html).
+   Uses !important + descendant selectors so it works without touching app.bundle.js. */
+
+html.light body { background: #F3F4F6 !important; }
+
+/* Root app wrapper: its background is an inline style, so this overrides it. */
+html.light div[dir="rtl"][lang="ar"] {
+  background: radial-gradient(1200px 600px at 50% -10%, #eef7d8 0%, #F3F4F6 55%) !important;
+}
+
+/* Surfaces */
+html.light .bg-page { background-color: #F3F4F6 !important; }
+html.light .bg-panel2 { background-color: #FFFFFF !important; }
+html.light .bg-panel3-90 { background-color: hsla(0, 0%, 100%, 0.85) !important; }
+html.light .bg-card { background-color: #FFFFFF !important; }
+html.light .grad-panel {
+  background: linear-gradient(to bottom right, #FFFFFF, #F1F2F4) !important;
+}
+
+/* Text */
+html.light .text-primary { color: #14171A !important; }
+html.light .text-muted { color: #6B7076 !important; }
+html.light .text-faint { color: #C7CBD1 !important; }
+
+/* Borders / subtle overlays: flip "white at low opacity" to "black at low opacity" */
+html.light .border-white\/5 { border-color: rgba(0, 0, 0, 0.06) !important; }
+html.light .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
+html.light .border-white\/15 { border-color: rgba(0, 0, 0, 0.15) !important; }
+html.light .bg-white\/5 { background-color: rgba(0, 0, 0, 0.04) !important; }
+html.light .bg-white\/10 { background-color: rgba(0, 0, 0, 0.06) !important; }
+
+/* Scrollbar track (kept transparent either way, no change needed) */
+
+/* The floating theme-toggle button itself */
+#theme-toggle-btn {
+  position: fixed;
+  bottom: 84px;
+  left: 14px;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #16191D;
+  color: #F5F6F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+html.light #theme-toggle-btn {
+  background: #FFFFFF;
+  color: #14171A;
+  border-color: rgba(0, 0, 0, 0.1);
+}
