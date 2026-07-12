@@ -44,8 +44,8 @@ html.light .text-ink { color: #1C1B19 !important; }
 /* The floating theme-toggle button itself */
 #theme-toggle-btn {
   position: fixed;
-  bottom: 84px;
-  left: 14px;
+  top: 27px;
+  left: 122px;
   z-index: 50;
   width: 44px;
   height: 44px;
