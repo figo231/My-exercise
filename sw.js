@@ -1,13 +1,28 @@
-const CACHE_NAME = "gym-tracker-v13";
+const CACHE_NAME = "gym-tracker-v14";
 const ASSETS = [
   "./",
   "./index.html",
   "./app.bundle.js",
   "./style.css",
   "./theme-light.css",
+  "./fonts.css",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
+  "./fonts/cairo-arabic-600.woff2",
+  "./fonts/cairo-latin-600.woff2",
+  "./fonts/cairo-arabic-700.woff2",
+  "./fonts/cairo-latin-700.woff2",
+  "./fonts/cairo-arabic-800.woff2",
+  "./fonts/cairo-latin-800.woff2",
+  "./fonts/cairo-arabic-900.woff2",
+  "./fonts/cairo-latin-900.woff2",
+  "./fonts/tajawal-arabic-400.woff2",
+  "./fonts/tajawal-latin-400.woff2",
+  "./fonts/tajawal-arabic-500.woff2",
+  "./fonts/tajawal-latin-500.woff2",
+  "./fonts/tajawal-arabic-700.woff2",
+  "./fonts/tajawal-latin-700.woff2",
 ];
 
 self.addEventListener("install", (event) => {
