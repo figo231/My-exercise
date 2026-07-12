@@ -12,9 +12,9 @@ Error generating stack: `+e.message+`
         .font-tajawal { font-family: 'Tajawal', sans-serif; }
         .tabular { font-variant-numeric: tabular-nums; }
         @keyframes fadein { from { opacity:0; transform: translateY(6px);} to {opacity:1; transform:translateY(0);} }
-        .fadein { animation: fadein .35s ease both; }
+        .fadein { animation: fadein .35s ease; }
         @keyframes popin { from { opacity:0; transform: scale(0.94);} to {opacity:1; transform:scale(1);} }
-        .popin { animation: popin .22s cubic-bezier(.2,.9,.3,1.2) both; }
+        .popin { animation: popin .22s cubic-bezier(.2,.9,.3,1.2); }
         ::-webkit-scrollbar { width: 0px; height: 0px; }
 
         /* Palette as plain CSS (arbitrary Tailwind bg-[#..]/text-[#..] classes
