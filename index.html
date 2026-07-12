@@ -43,25 +43,6 @@
   }
 </script>
 
-<!-- Dark/Light mode toggle button (sits on top of the app, doesn't touch app.bundle.js) -->
-<button id="theme-toggle-btn" aria-label="تبديل الوضع الداكن/الفاتح">🌙</button>
-<script>
-  (function () {
-    var btn = document.getElementById("theme-toggle-btn");
-    function sync() {
-      var isLight = document.documentElement.classList.contains("light");
-      btn.textContent = isLight ? "☀️" : "🌙";
-    }
-    btn.addEventListener("click", function () {
-      document.documentElement.classList.toggle("light");
-      var isLight = document.documentElement.classList.contains("light");
-      localStorage.setItem("theme", isLight ? "light" : "dark");
-      sync();
-    });
-    sync();
-  })();
-</script>
-
 <!-- Fix: whenever a bottom-sheet modal (exercise management, settings, etc.)
      gets added to the page, make sure its inner panel starts scrolled to the
      very top, so the header and first button are always visible immediately. -->
