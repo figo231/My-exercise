@@ -43,7 +43,7 @@ Error generating stack: `+e.message+`
         .shadow-lime-soft { box-shadow: 0 8px 24px -8px rgba(212, 175, 106, 0.4); }
         .ring-lime:focus { box-shadow: 0 0 0 2px ${Bd.accent}; outline: none; }
         .border-r-3 { border-right-width: 3px; border-right-style: solid; }
-        .max-h-85vh { max-height: 85vh; }
+        .max-h-85vh { max-height: 92vh; }
         .press-98 { transition: transform .1s ease; }
         .press-98:active { transform: scale(0.98); }
         .ambient-orb { position: fixed; border-radius: 50%; filter: blur(50px); pointer-events: none; z-index: 0; }
