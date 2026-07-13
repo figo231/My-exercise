@@ -1,4 +1,4 @@
-const CACHE_NAME = "gym-tracker-v14";
+const CACHE_NAME = "gym-tracker-v15";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,20 +9,16 @@ const ASSETS = [
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
-  "./fonts/cairo-arabic-600.woff2",
-  "./fonts/cairo-latin-600.woff2",
-  "./fonts/cairo-arabic-700.woff2",
-  "./fonts/cairo-latin-700.woff2",
-  "./fonts/cairo-arabic-800.woff2",
-  "./fonts/cairo-latin-800.woff2",
-  "./fonts/cairo-arabic-900.woff2",
-  "./fonts/cairo-latin-900.woff2",
-  "./fonts/tajawal-arabic-400.woff2",
-  "./fonts/tajawal-latin-400.woff2",
-  "./fonts/tajawal-arabic-500.woff2",
-  "./fonts/tajawal-latin-500.woff2",
-  "./fonts/tajawal-arabic-700.woff2",
-  "./fonts/tajawal-latin-700.woff2",
+  "./cairo-arabic-800.woff2",
+  "./cairo-latin-800.woff2",
+  "./cairo-arabic-900.woff2",
+  "./cairo-latin-900.woff2",
+  "./tajawal-arabic-400.woff2",
+  "./tajawal-latin-400.woff2",
+  "./tajawal-arabic-500.woff2",
+  "./tajawal-latin-500.woff2",
+  "./tajawal-arabic-700.woff2",
+  "./tajawal-latin-700.woff2",
 ];
 
 self.addEventListener("install", (event) => {

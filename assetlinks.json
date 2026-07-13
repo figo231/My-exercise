@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.figo231.twa",
+        "sha256_cert_fingerprints": ["E9:38:6C:52:21:E3:22:92:6F:72:45:F1:2C:7C:72:4D:93:D6:25:0B:CE:4D:09:16:12:AE:0F:D3:0F:41:B7:56"]
+      }
+    }]
