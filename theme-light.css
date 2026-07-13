@@ -1,45 +1,64 @@
 /* Light mode overrides.
    Activated when <html> has class="light" (toggled by the button in index.html).
    Uses !important + descendant selectors so it works without touching app.bundle.js.
-   Palette: crisp white surfaces + charcoal text + the same warm gold accent
-   used in dark mode, for a consistent premium look in both themes. */
+   Premium Glassmorphism palette: Primary #2563EB / Secondary #7C3AED / Accent #06B6D4. */
 
-html.light body { background: #FAF9F7 !important; }
+html.light body { background: #F8FAFC !important; }
 
 /* Root app wrapper: its background is an inline style, so this overrides it. */
 html.light div[dir="rtl"][lang="ar"] {
-  background: radial-gradient(1200px 600px at 50% -10%, #f3ecd8 0%, #FAF9F7 55%) !important;
+  background:
+    radial-gradient(1000px 560px at 12% -8%, rgba(37,99,235,.08), transparent 60%),
+    radial-gradient(900px 520px at 100% 8%, rgba(124,58,237,.06), transparent 55%),
+    #F8FAFC !important;
 }
 
-/* Surfaces */
-html.light .bg-page { background-color: #FAF9F7 !important; }
-html.light .bg-panel2 { background-color: #FFFFFF !important; }
-html.light .bg-panel3-90 { background-color: hsla(0, 0%, 100%, 0.88) !important; }
-html.light .bg-card { background-color: #FFFFFF !important; }
+/* Surfaces: frosted glass panels over the light background */
+html.light .bg-page { background-color: #F8FAFC !important; }
+html.light .bg-panel2 {
+  background-color: rgba(255,255,255,.55) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+}
+html.light .bg-panel3-90 {
+  background-color: rgba(255,255,255,.72) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+}
+html.light .bg-card {
+  background-color: rgba(255,255,255,.55) !important;
+  border: 1px solid rgba(15,23,42,.08) !important;
+  box-shadow: 0 1px 2px rgba(15,23,42,.04), 0 12px 28px -16px rgba(37,99,235,.18) !important;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, border-color .25s ease;
+}
+html.light .bg-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37,99,235,.3) !important;
+  box-shadow: 0 16px 36px -16px rgba(37,99,235,.25) !important;
+}
+html.light .bg-ink {
+  background-color: rgba(255,255,255,.6) !important;
+  border: 1px solid rgba(15,23,42,.08) !important;
+}
 html.light .grad-panel {
-  background: linear-gradient(to bottom right, #FFFFFF, #F3F1EC) !important;
+  background: linear-gradient(155deg, rgba(37,99,235,.08), rgba(255,255,255,.6)) !important;
+  border: 1px solid rgba(15,23,42,.08) !important;
 }
 
 /* Text */
-html.light .text-primary { color: #1C1B19 !important; }
-html.light .text-muted { color: #6B655C !important; }
-html.light .text-faint { color: #D8D3C8 !important; }
+html.light .text-primary { color: #0F172A !important; }
+html.light .text-muted { color: #64748B !important; }
+html.light .text-faint { color: rgba(100,116,139,.35) !important; }
 
-/* Cards get a soft, expensive-looking edge + shadow instead of a flat line */
-html.light .bg-card,
-html.light .grad-panel {
-  box-shadow: 0 1px 2px rgba(28, 27, 25, 0.04), 0 8px 24px -12px rgba(28, 27, 25, 0.12) !important;
-}
+/* Borders / subtle overlays: flip "white at low opacity" to "navy at low opacity" */
+html.light .border-white\/5 { border-color: rgba(15,23,42,.06) !important; }
+html.light .border-white\/10 { border-color: rgba(15,23,42,.1) !important; }
+html.light .border-white\/15 { border-color: rgba(15,23,42,.15) !important; }
+html.light .bg-white\/5 { background-color: rgba(15,23,42,.04) !important; }
+html.light .bg-white\/10 { background-color: rgba(15,23,42,.06) !important; }
 
-/* Borders / subtle overlays: flip "white at low opacity" to "black at low opacity" */
-html.light .border-white\/5 { border-color: rgba(28, 27, 25, 0.06) !important; }
-html.light .border-white\/10 { border-color: rgba(28, 27, 25, 0.1) !important; }
-html.light .border-white\/15 { border-color: rgba(28, 27, 25, 0.15) !important; }
-html.light .bg-white\/5 { background-color: rgba(28, 27, 25, 0.04) !important; }
-html.light .bg-white\/10 { background-color: rgba(28, 27, 25, 0.06) !important; }
-
-/* Text painted on top of the gold accent stays dark for contrast either way */
-html.light .text-ink { color: #1C1B19 !important; }
+/* Text painted on top of the accent gradient stays white for contrast in both themes */
+html.light .text-ink { color: #F8FAFC !important; }
 
 /* The floating theme-toggle button itself */
 #theme-toggle-btn {
@@ -50,20 +69,23 @@ html.light .text-ink { color: #1C1B19 !important; }
   width: 44px;
   height: 44px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: #17181C;
-  color: #F5F6F7;
+  border: 1px solid rgba(148,163,184,0.14);
+  background: rgba(15,23,42,.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  color: #F8FAFC;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px -8px rgba(37,99,235,0.35);
   cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
 }
+#theme-toggle-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(37,99,235,0.45); }
 html.light #theme-toggle-btn {
-  background: #FFFFFF;
-  color: #1C1B19;
-  border-color: rgba(28, 27, 25, 0.1);
-  box-shadow: 0 1px 2px rgba(28,27,25,0.05), 0 8px 24px -10px rgba(28,27,25,0.15);
+  background: rgba(255,255,255,.65);
+  color: #0F172A;
+  border-color: rgba(15,23,42,.1);
+  box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 8px 24px -10px rgba(37,99,235,.2);
 }
-
