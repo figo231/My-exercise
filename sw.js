@@ -1,10 +1,14 @@
-const CACHE_NAME = "gym-tracker-v19";
+const CACHE_NAME = "gym-tracker-v20";
 const ASSETS = [
   "./",
   "./index.html",
-  "./app.bundle.js",
-  "./style.css",
-  "./theme-light.css",
+  "./exercises.html",
+  "./exercise-detail.html",
+  "./stats.html",
+  "./profile.html",
+  "./programs.html",
+  "./ai-coach.html",
+  "./app-data.js",
   "./fonts.css",
   "./manifest.json",
   "./icon-192.png",

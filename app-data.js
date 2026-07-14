@@ -17,7 +17,7 @@
 
   function defaultState() {
     return {
-      profile: { name: "", level: 1, xp: 0, xpNext: 500, heightCm: null, memberSince: todayISO() },
+      profile: { name: "", username: "", bio: "", avatar: null, cover: null, coverGradient: "g1", level: 1, xp: 0, xpNext: 500, heightCm: null, memberSince: todayISO() },
       weightLogs: [], // {date, weight, bodyFat}
       goalWeight: null,
       exerciseLogs: {}, // exerciseId: [{date, weight, sets, reps}]
@@ -97,6 +97,11 @@
       if (!parsed.profile) parsed.profile = defaultState().profile;
       if (parsed.profile.heightCm === undefined) parsed.profile.heightCm = null;
       if (!parsed.profile.memberSince) parsed.profile.memberSince = todayISO();
+      if (parsed.profile.username === undefined) parsed.profile.username = "";
+      if (parsed.profile.bio === undefined) parsed.profile.bio = "";
+      if (parsed.profile.avatar === undefined) parsed.profile.avatar = null;
+      if (parsed.profile.cover === undefined) parsed.profile.cover = null;
+      if (parsed.profile.coverGradient === undefined) parsed.profile.coverGradient = "g1";
       if (!parsed.prHistory) parsed.prHistory = [];
       if (parsed.activeProgramId === undefined) parsed.activeProgramId = null;
       return parsed;
@@ -110,8 +115,10 @@
   function save(state) {
     try {
       localStorage.setItem(KEY, JSON.stringify(state));
+      return true;
     } catch (e) {
       console.error("gymak store save failed", e);
+      return false;
     }
   }
 
@@ -298,6 +305,48 @@
       return s.profile;
     },
 
+    setUsername(username) {
+      const s = load();
+      const clean = (username || "").trim().replace(/^@+/, "").replace(/[^a-zA-Z0-9_\u0600-\u06FF]/g, "");
+      s.profile.username = clean.slice(0, 30);
+      save(s);
+      return s.profile;
+    },
+
+    setBio(bio) {
+      const s = load();
+      s.profile.bio = (bio || "").trim().slice(0, 150);
+      save(s);
+      return s.profile;
+    },
+
+    setAvatar(dataUrl) {
+      const s = load();
+      const prev = s.profile.avatar;
+      s.profile.avatar = dataUrl || null;
+      const ok = save(s);
+      if (!ok) s.profile.avatar = prev;
+      return { ok, profile: s.profile };
+    },
+
+    setCover(dataUrl) {
+      const s = load();
+      const prev = { cover: s.profile.cover, coverGradient: s.profile.coverGradient };
+      s.profile.cover = dataUrl || null;
+      if (dataUrl) s.profile.coverGradient = null;
+      const ok = save(s);
+      if (!ok) { s.profile.cover = prev.cover; s.profile.coverGradient = prev.coverGradient; }
+      return { ok, profile: s.profile };
+    },
+
+    setCoverGradient(gradientId) {
+      const s = load();
+      s.profile.coverGradient = gradientId || null;
+      s.profile.cover = null;
+      save(s);
+      return s.profile;
+    },
+
     setHeight(cm) {
       const s = load();
       s.profile.heightCm = cm ? Number(cm) : null;
@@ -346,6 +395,10 @@
     // ===== PRs =====
     getRecentPRs(limit = 5) {
       return load().prHistory.slice(0, limit);
+    },
+
+    getTotalWorkoutDays() {
+      return load().workoutDays.length;
     },
 
     // ===== Tonnage & activity within a window =====

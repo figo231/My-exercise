@@ -248,7 +248,7 @@
       </p>
       <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
     </div>
-    <a href="profile.html" class="header-icon-btn" style="text-decoration:none;">
+    <a href="profile.html" class="header-icon-btn" style="text-decoration:none;" aria-label="الإشعارات">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"><path d="M12 2a7 7 0 0 0-7 7v3.6c0 .5-.2 1-.6 1.4L3 16.5h18l-1.4-2.5c-.4-.4-.6-.9-.6-1.4V9a7 7 0 0 0-7-7Z"/><path d="M9 19a3 3 0 0 0 6 0"/></svg>
     </a>
   </div>
@@ -407,6 +407,7 @@
 
     // Header name / XP
     document.getElementById("headerName").textContent = "أهلاً، " + (profile.name || "بطل الجيم") + " 👋";
+    document.getElementById("avatarImg").src = profile.avatar || "icon-192.png";
     document.getElementById("levelBadge").textContent = "Lv. " + profile.level;
     document.getElementById("xpText").textContent = fmt(profile.xp) + " / " + fmt(profile.xpNext) + " XP";
     document.getElementById("xpRemainText").textContent = "باقي " + fmt(profile.xpNext - profile.xp) + " للمستوى " + (profile.level + 1);
