@@ -138,6 +138,28 @@
   .p-xp-track{height:8px; border-radius:20px; background:rgba(255,255,255,0.07); overflow:hidden;}
   .p-xp-fill{height:100%; border-radius:20px; background:linear-gradient(90deg,#2563EB,#7C3AED); box-shadow:0 0 12px rgba(124,58,237,0.6);}
 
+  /* ===== Settings sheets (lang/units + notifications) ===== */
+  .settings-block{margin-bottom:16px;}
+  .settings-block-label{font-size:11.5px; font-weight:800; color:var(--text-secondary); margin-bottom:8px; display:block;}
+  .seg-control{display:flex; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:3px; gap:3px;}
+  .seg-option{flex:1; text-align:center; padding:9px 6px; border-radius:9px; font-size:12.5px; font-weight:800; cursor:pointer; color:var(--text-secondary);}
+  .seg-option.active{background:linear-gradient(135deg,#2563EB,#7C3AED); color:#fff;}
+  .lang-row-static{display:flex; align-items:center; justify-content:space-between; padding:11px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px;}
+  .lang-row-static .lname{font-size:13px; font-weight:800;}
+  .lang-row-static .lnote{font-size:10.5px; color:var(--text-dim); font-weight:700;}
+  .toggle-row{display:flex; align-items:center; justify-content:space-between; padding:2px 0 14px;}
+  .toggle-row .trow-label{font-size:13px; font-weight:800;}
+  .toggle-row .trow-sub{font-size:10.5px; color:var(--text-dim); font-weight:700; margin-top:2px;}
+  .switch{position:relative; width:44px; height:26px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .switch-track{position:absolute; inset:0; background:rgba(255,255,255,0.14); border-radius:20px; cursor:pointer; transition:.2s;}
+  .switch-track::before{content:""; position:absolute; width:20px; height:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s;}
+  .switch input:checked + .switch-track{background:linear-gradient(135deg,#2563EB,#7C3AED);}
+  .switch input:checked + .switch-track::before{transform:translateX(-18px);}
+  .time-field{display:none;}
+  .time-field.show{display:block;}
+  .notif-note{font-size:10.5px; color:var(--text-dim); font-weight:600; line-height:1.6; margin-top:2px;}
+
   /* ===== AI Coach card ===== */
   .coach-card{
     display:flex; align-items:center; gap:12px; padding:15px; margin-bottom:16px;
@@ -286,6 +308,58 @@
   </div>
   <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" />
   <input type="file" id="coverFileInput" accept="image/*" style="display:none;" />
+
+  <!-- ===== Language & Units modal ===== -->
+  <div class="modal-backdrop" id="langModalBackdrop">
+    <div class="edit-sheet">
+      <div class="edit-sheet-handle"></div>
+      <h3>اللغة والوحدات</h3>
+      <div class="settings-block">
+        <span class="settings-block-label">اللغة</span>
+        <div class="lang-row-static">
+          <span class="lname">العربية</span>
+          <span class="lnote">— الوحيدة المتاحة حاليًا</span>
+        </div>
+      </div>
+      <div class="settings-block">
+        <span class="settings-block-label">وحدة الوزن</span>
+        <div class="seg-control" id="unitSeg">
+          <div class="seg-option" data-unit="kg">كجم</div>
+          <div class="seg-option" data-unit="lb">رطل (lb)</div>
+        </div>
+      </div>
+      <div class="edit-sheet-actions">
+        <button id="langCancelBtn" type="button">إغلاق</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Notifications & Reminders modal ===== -->
+  <div class="modal-backdrop" id="notifModalBackdrop">
+    <div class="edit-sheet">
+      <div class="edit-sheet-handle"></div>
+      <h3>الإشعارات والتذكيرات</h3>
+      <div class="toggle-row">
+        <div>
+          <div class="trow-label">تذكير يومي بالتمرين</div>
+          <div class="trow-sub">هيوصلك إشعار في الميعاد اللي تحدده</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="notifToggle" />
+          <span class="switch-track"></span>
+        </label>
+      </div>
+      <div class="edit-field time-field" id="notifTimeField">
+        <label for="notifTime">ميعاد التذكير</label>
+        <input type="time" id="notifTime" value="19:00" />
+      </div>
+      <p class="notif-note">الإشعار بيتبعت من المتصفح، فلازم تسمح بالإشعارات وتسيب التطبيق مفتوح في تبويب (أو في الخلفية على الموبايل) عشان يوصلك في الميعاد.</p>
+      <div class="edit-sheet-actions" style="margin-top:14px;">
+        <button id="notifCancelBtn" type="button">إلغاء</button>
+        <button id="notifSaveBtn" type="button">حفظ</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== AI Coach ===== -->
   <a href="ai-coach.html" class="glass coach-card" style="text-decoration:none;color:inherit;">
@@ -474,13 +548,13 @@
 
     // Body measurements
     const latest = store.getLatestWeight();
-    document.getElementById("ibWeight").textContent = latest ? fmt(latest.weight) + " كجم" : "—";
+    document.getElementById("ibWeight").textContent = latest ? store.formatWeight(latest.weight) : "—";
     document.getElementById("ibBodyFat").textContent = (latest && latest.bodyFat != null) ? latest.bodyFat + "%" : "—";
     document.getElementById("inbodyUpdated").textContent = latest ? ("آخر تحديث: " + latest.date) : "لسه مفيش قياس";
     const bmi = store.getBMI();
     document.getElementById("ibBMI").textContent = bmi != null ? bmi : "حدد طولك";
     const goal = store.getGoalWeight();
-    document.getElementById("ibGoal").textContent = goal != null ? (fmt(goal) + " كجم") : "حدد هدفك";
+    document.getElementById("ibGoal").textContent = goal != null ? store.formatWeight(goal) : "حدد هدفك";
   }
 
   // ===== Image compression helper (keeps localStorage small) =====
@@ -583,7 +657,10 @@
   function closeEditModal() { editModal.classList.remove("open"); }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && editModal.classList.contains("open")) closeEditModal();
+    if (e.key !== "Escape") return;
+    if (editModal.classList.contains("open")) closeEditModal();
+    if (langModal.classList.contains("open")) closeLangModal();
+    if (notifModal.classList.contains("open")) closeNotifModal();
   });
 
   document.getElementById("editProfileBtn").addEventListener("click", openEditModal);
@@ -609,9 +686,10 @@
 
   // ===== Goal weight =====
   document.getElementById("ibGoal").addEventListener("click", () => {
-    const current = store.getGoalWeight();
-    const val = prompt("اكتب وزنك المستهدف (كجم):", current || "");
-    if (val && !isNaN(parseFloat(val))) { store.setGoalWeight(parseFloat(val)); renderProfile(); }
+    const currentKg = store.getGoalWeight();
+    const currentDisp = currentKg != null ? store.toDisplayWeight(currentKg) : "";
+    const val = prompt(`اكتب وزنك المستهدف (${store.unitLabel()}):`, currentDisp);
+    if (val && !isNaN(parseFloat(val))) { store.setGoalWeight(store.fromDisplayWeight(parseFloat(val))); renderProfile(); }
   });
 
   // ===== Share =====
@@ -631,9 +709,88 @@
     }
   });
 
-  // ===== Settings placeholders (honest: not implemented yet) =====
-  document.getElementById("settingsLang").addEventListener("click", () => alert("إعدادات اللغة والوحدات قريبًا."));
-  document.getElementById("settingsNotif").addEventListener("click", () => alert("التذكيرات والإشعارات قريبًا."));
+  // ===== Language & Units modal =====
+  const langModal = document.getElementById("langModalBackdrop");
+  function openLangModal() {
+    const unit = store.getSettings().unit;
+    document.querySelectorAll("#unitSeg .seg-option").forEach((el) => {
+      el.classList.toggle("active", el.dataset.unit === unit);
+    });
+    langModal.classList.add("open");
+  }
+  function closeLangModal() { langModal.classList.remove("open"); }
+  document.getElementById("settingsLang").addEventListener("click", openLangModal);
+  document.getElementById("langCancelBtn").addEventListener("click", closeLangModal);
+  langModal.addEventListener("click", (e) => { if (e.target === langModal) closeLangModal(); });
+  document.querySelectorAll("#unitSeg .seg-option").forEach((el) => {
+    el.addEventListener("click", () => {
+      store.setUnit(el.dataset.unit);
+      document.querySelectorAll("#unitSeg .seg-option").forEach((o) => o.classList.toggle("active", o === el));
+      renderProfile();
+    });
+  });
+
+  // ===== Notifications & Reminders modal =====
+  const notifModal = document.getElementById("notifModalBackdrop");
+  const notifToggle = document.getElementById("notifToggle");
+  const notifTimeField = document.getElementById("notifTimeField");
+  const notifTimeInput = document.getElementById("notifTime");
+  notifToggle.addEventListener("change", () => {
+    notifTimeField.classList.toggle("show", notifToggle.checked);
+  });
+  function openNotifModal() {
+    const s = store.getSettings();
+    notifToggle.checked = s.notifEnabled;
+    notifTimeInput.value = s.notifTime || "19:00";
+    notifTimeField.classList.toggle("show", s.notifEnabled);
+    notifModal.classList.add("open");
+  }
+  function closeNotifModal() { notifModal.classList.remove("open"); }
+  document.getElementById("settingsNotif").addEventListener("click", openNotifModal);
+  document.getElementById("notifCancelBtn").addEventListener("click", closeNotifModal);
+  notifModal.addEventListener("click", (e) => { if (e.target === notifModal) closeNotifModal(); });
+
+  let notifTimerId = null;
+  function scheduleReminder() {
+    if (notifTimerId) { clearTimeout(notifTimerId); notifTimerId = null; }
+    const s = store.getSettings();
+    if (!s.notifEnabled || Notification.permission !== "granted") return;
+    const [h, m] = (s.notifTime || "19:00").split(":").map(Number);
+    const now = new Date();
+    let next = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0);
+    if (next <= now) next.setDate(next.getDate() + 1);
+    const delay = next - now;
+    notifTimerId = setTimeout(() => {
+      try {
+        new Notification("جيمك — وقت التمرين 💪", { body: "متنساش تسجل تمرينك النهاردة.", icon: "icon-192.png" });
+      } catch (e) {}
+      scheduleReminder(); // re-arm for tomorrow
+    }, delay);
+  }
+  document.getElementById("notifSaveBtn").addEventListener("click", async () => {
+    const wantsOn = notifToggle.checked;
+    if (wantsOn && !("Notification" in window)) {
+      alert("متصفحك مش بيدعم الإشعارات.");
+      notifToggle.checked = false;
+      store.setNotifSettings({ enabled: false });
+      closeNotifModal();
+      return;
+    }
+    if (wantsOn && Notification.permission !== "granted") {
+      const perm = await Notification.requestPermission();
+      if (perm !== "granted") {
+        alert("محتاجين إذنك للإشعارات عشان نقدر نفعّل التذكير.");
+        notifToggle.checked = false;
+        store.setNotifSettings({ enabled: false });
+        closeNotifModal();
+        return;
+      }
+    }
+    store.setNotifSettings({ enabled: wantsOn, time: notifTimeInput.value });
+    scheduleReminder();
+    closeNotifModal();
+  });
+  if ("Notification" in window) scheduleReminder(); // re-arm on page load if already enabled
 
   // ===== Reset all data =====
   document.getElementById("settingsReset").addEventListener("click", () => {

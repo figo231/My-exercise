@@ -290,7 +290,7 @@
       <div>
         <div class="weight-top">
           <span class="weight-num" id="weightNum">78.4</span>
-          <span class="weight-unit">كجم</span>
+          <span class="weight-unit" id="weightUnitLabel">كجم</span>
         </div>
         <span class="weight-diff down" id="weightDiff">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
@@ -375,7 +375,7 @@
     <h3 style="font-size:15px; font-weight:800; margin:0 0 16px;">تسجيل وزن اليوم</h3>
     <div style="display:flex; gap:10px; margin-bottom:14px;">
       <div style="flex:1;">
-        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">الوزن (كجم)</label>
+        <label id="weightInputLabel" style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">الوزن (كجم)</label>
         <input id="weightInput" type="number" step="0.1" inputmode="decimal" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700;" />
       </div>
       <div style="flex:1;">
@@ -425,13 +425,15 @@
 
     // Weight card
     if (latest) {
-      document.getElementById("weightNum").textContent = fmt(latest.weight);
+      document.getElementById("weightNum").textContent = store.toDisplayWeight(latest.weight);
       document.getElementById("bodyFatVal").textContent = (latest.bodyFat != null ? latest.bodyFat + "%" : "—");
     } else {
       document.getElementById("weightNum").textContent = "—";
       document.getElementById("bodyFatVal").textContent = "—";
     }
-    document.getElementById("goalVal").textContent = goal != null ? (fmt(goal) + " كجم") : "—";
+    document.getElementById("weightUnitLabel").textContent = store.unitLabel();
+    document.getElementById("weightInputLabel").textContent = "الوزن (" + store.unitLabel() + ")";
+    document.getElementById("goalVal").textContent = goal != null ? store.formatWeight(goal) : "—";
     const diffEl = document.getElementById("weightDiff");
     const diffText = document.getElementById("weightDiffText");
     if (!diffInfo) {
@@ -470,7 +472,7 @@
               <div class="plan-sub">${r.muscleLabel} · ${r.sets} × ${r.reps}</div>
             </div>
           </div>
-          <span class="plan-weight">${fmt(r.weight)} كجم</span>
+          <span class="plan-weight">${store.formatWeight(r.weight)}</span>
         </div>`).join("");
     }
   }
@@ -479,7 +481,7 @@
   const overlay = document.getElementById("weightModalOverlay");
   const openModal = () => {
     const latest = window.GymakStore.getLatestWeight();
-    document.getElementById("weightInput").value = latest ? latest.weight : "";
+    document.getElementById("weightInput").value = latest ? window.GymakStore.toDisplayWeight(latest.weight) : "";
     document.getElementById("bodyFatInput").value = latest && latest.bodyFat != null ? latest.bodyFat : "";
     overlay.style.display = "flex";
   };
@@ -489,10 +491,10 @@
   document.getElementById("weightModalCancel").addEventListener("click", closeModal);
   overlay.addEventListener("click", (e) => { if (e.target === overlay) closeModal(); });
   document.getElementById("weightModalSave").addEventListener("click", () => {
-    const w = parseFloat(document.getElementById("weightInput").value);
+    const wDisplay = parseFloat(document.getElementById("weightInput").value);
     const bf = document.getElementById("bodyFatInput").value;
-    if (!w || w <= 0) { document.getElementById("weightInput").focus(); return; }
-    window.GymakStore.addWeight(w, bf === "" ? null : parseFloat(bf));
+    if (!wDisplay || wDisplay <= 0) { document.getElementById("weightInput").focus(); return; }
+    window.GymakStore.addWeight(window.GymakStore.fromDisplayWeight(wDisplay), bf === "" ? null : parseFloat(bf));
     closeModal();
     renderHome();
   });
@@ -504,9 +506,10 @@
   });
 
   document.getElementById("goalRow").addEventListener("click", () => {
-    const current = window.GymakStore.getGoalWeight();
-    const val = prompt("اكتب وزنك المستهدف (كجم):", current || "");
-    if (val && !isNaN(parseFloat(val))) { window.GymakStore.setGoalWeight(parseFloat(val)); renderHome(); }
+    const currentKg = window.GymakStore.getGoalWeight();
+    const currentDisp = currentKg != null ? window.GymakStore.toDisplayWeight(currentKg) : "";
+    const val = prompt(`اكتب وزنك المستهدف (${window.GymakStore.unitLabel()}):`, currentDisp);
+    if (val && !isNaN(parseFloat(val))) { window.GymakStore.setGoalWeight(window.GymakStore.fromDisplayWeight(parseFloat(val))); renderHome(); }
   });
 
   renderHome();

@@ -203,7 +203,7 @@
   <div class="glass log-card">
     <div class="log-grid">
       <div class="log-field">
-        <div class="log-label">الوزن (كجم)</div>
+        <div class="log-label" id="logWeightLabel">الوزن (كجم)</div>
         <input id="logWeight" type="number" step="0.5" inputmode="decimal" value="80" style="width:100%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
       </div>
       <div class="log-field">
@@ -246,19 +246,21 @@
     document.getElementById("logReps").value = exercise.reps;
   }
 
+  document.getElementById("logWeightLabel").textContent = "الوزن (" + store.unitLabel() + ")";
+
   const last = store.getLastExerciseLog(EXERCISE_ID);
   if (last) {
-    document.getElementById("logWeight").value = last.weight;
+    document.getElementById("logWeight").value = store.toDisplayWeight(last.weight);
     document.getElementById("logSets").value = last.sets;
     document.getElementById("logReps").value = last.reps;
   }
 
   document.getElementById("logSaveBtn").addEventListener("click", () => {
-    const w = parseFloat(document.getElementById("logWeight").value) || 0;
+    const wDisplay = parseFloat(document.getElementById("logWeight").value) || 0;
     const sets = parseInt(document.getElementById("logSets").value) || 0;
     const reps = parseInt(document.getElementById("logReps").value) || 0;
-    if (w <= 0 || sets <= 0 || reps <= 0) return;
-    store.logSet(EXERCISE_ID, w, sets, reps);
+    if (wDisplay <= 0 || sets <= 0 || reps <= 0) return;
+    store.logSet(EXERCISE_ID, store.fromDisplayWeight(wDisplay), sets, reps);
     const fb = document.getElementById("logFeedback");
     fb.style.display = "block";
     setTimeout(() => { fb.style.display = "none"; }, 2500);

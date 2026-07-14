@@ -26,8 +26,11 @@
       exercises: SEED_EXERCISES.slice(),
       prHistory: [], // {exerciseId, exerciseName, weight, prevWeight, date}
       activeProgramId: null,
+      settings: { unit: "kg", notifEnabled: false, notifTime: "19:00" },
     };
   }
+
+  const KG_PER_LB = 0.45359237;
 
   const PROGRAMS = [
     {
@@ -104,6 +107,10 @@
       if (parsed.profile.coverGradient === undefined) parsed.profile.coverGradient = "g1";
       if (!parsed.prHistory) parsed.prHistory = [];
       if (parsed.activeProgramId === undefined) parsed.activeProgramId = null;
+      if (!parsed.settings) parsed.settings = { unit: "kg", notifEnabled: false, notifTime: "19:00" };
+      if (parsed.settings.unit === undefined) parsed.settings.unit = "kg";
+      if (parsed.settings.notifEnabled === undefined) parsed.settings.notifEnabled = false;
+      if (parsed.settings.notifTime === undefined) parsed.settings.notifTime = "19:00";
       return parsed;
     } catch (e) {
       const s = defaultState();
@@ -168,6 +175,52 @@
 
     getAllMuscles() {
       return MUSCLE_META;
+    },
+
+    // ===== Settings (units / notifications) =====
+    getSettings() {
+      return load().settings;
+    },
+
+    setUnit(unit) {
+      const s = load();
+      s.settings.unit = unit === "lb" ? "lb" : "kg";
+      save(s);
+      return s.settings.unit;
+    },
+
+    setNotifSettings({ enabled, time }) {
+      const s = load();
+      if (enabled !== undefined) s.settings.notifEnabled = !!enabled;
+      if (time) s.settings.notifTime = time;
+      save(s);
+      return s.settings;
+    },
+
+    // كل الأوزان بتتخزن دايمًا بالكيلوجرام؛ الدوال دي بس للعرض/الإدخال حسب وحدة المستخدم
+    toDisplayWeight(kg) {
+      if (kg == null) return null;
+      const unit = load().settings.unit;
+      const v = unit === "lb" ? Number(kg) / KG_PER_LB : Number(kg);
+      return Math.round(v * 10) / 10;
+    },
+
+    fromDisplayWeight(val) {
+      const unit = load().settings.unit;
+      const n = Number(val);
+      if (isNaN(n)) return n;
+      const kg = unit === "lb" ? n * KG_PER_LB : n;
+      return Math.round(kg * 100) / 100;
+    },
+
+    unitLabel() {
+      return load().settings.unit === "lb" ? "رطل" : "كجم";
+    },
+
+    formatWeight(kg) {
+      if (kg == null) return "—";
+      const disp = this.toDisplayWeight(kg);
+      return disp.toLocaleString("en-US", { maximumFractionDigits: 1 }) + " " + this.unitLabel();
     },
 
     // ===== Weight =====
