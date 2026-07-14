@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>بنش برس بار — جيمك</title>
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#0B1120" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<link rel="icon" href="icon-192.png" />
+<link rel="stylesheet" href="fonts.css" />
+
+<style>
+  :root{
+    --bg-deep:#0B1120;
+    --card-glass:rgba(255,255,255,0.045);
+    --border-soft:rgba(255,255,255,0.09);
+    --text-primary:#F8FAFC;
+    --text-secondary:#94A3B8;
+    --text-dim:#64748B;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg-deep);}
+  body{font-family:'Tajawal','Cairo',sans-serif; color:var(--text-primary); min-height:100vh;}
+  h1,h2,h3,.cairo{font-family:'Cairo','Tajawal',sans-serif;}
+
+  .bg-ambient{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(700px 420px at 12% -8%, rgba(37,99,235,0.32), transparent 60%),
+      radial-gradient(650px 500px at 105% 10%, rgba(124,58,237,0.28), transparent 60%),
+      var(--bg-deep);
+  }
+  .app{max-width:480px; margin:0 auto; padding:16px 14px 40px;}
+
+  .top-bar{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .back-btn{
+    width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.045); border:1px solid var(--border-soft); flex-shrink:0;
+  }
+  .top-title{font-size:15.5px; font-weight:800;}
+
+  .glass{
+    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:20px;
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
+    box-shadow:0 8px 26px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+
+  /* ===== Media preview ===== */
+  .media-frame{
+    height:220px; border-radius:22px; margin-bottom:16px; position:relative; overflow:hidden;
+    background:radial-gradient(circle at 30% 20%, rgba(37,99,235,0.22), transparent 60%),
+      radial-gradient(circle at 80% 80%, rgba(124,58,237,0.2), transparent 60%),
+      #101a30;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .media-play{
+    width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); backdrop-filter:blur(6px);
+  }
+  .media-tag{
+    position:absolute; top:12px; right:12px; font-size:10px; font-weight:800; color:#fff;
+    background:rgba(0,0,0,0.4); padding:4px 10px; border-radius:20px;
+  }
+  .media-dots{position:absolute; bottom:12px; right:0; left:0; display:flex; justify-content:center; gap:5px;}
+  .media-dot{width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.3);}
+  .media-dot.on{background:#fff; width:16px; border-radius:4px;}
+
+  /* ===== Title block ===== */
+  .ex-title-row{display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;}
+  .ex-title{font-size:20px; font-weight:900; margin:0 0 5px;}
+  .ex-eng{font-size:12px; color:var(--text-dim); font-weight:600;}
+  .fav-btn{
+    width:38px; height:38px; border-radius:13px; display:flex; align-items:center; justify-content:center;
+    background:rgba(255,255,255,0.045); border:1px solid var(--border-soft); flex-shrink:0;
+  }
+
+  /* ===== Muscle map ===== */
+  .muscle-card{padding:16px; margin-bottom:14px;}
+  .muscle-legend{display:flex; gap:14px; margin-bottom:4px;}
+  .legend-item{display:flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:var(--text-secondary);}
+  .legend-dot{width:9px; height:9px; border-radius:50%; box-shadow:0 0 6px currentColor;}
+  .muscle-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+  .m-tag{font-size:11.5px; font-weight:700; padding:6px 13px; border-radius:20px;}
+  .m-tag.primary{background:rgba(59,130,246,0.16); color:#93C5FD;}
+  .m-tag.secondary{background:rgba(255,255,255,0.06); color:var(--text-secondary);}
+
+  /* ===== Section ===== */
+  .section-title{font-size:14.5px; font-weight:800; margin:18px 4px 10px;}
+  .steps-card{padding:6px 16px;}
+  .step-row{display:flex; gap:12px; padding:13px 0;}
+  .step-row + .step-row{border-top:1px solid rgba(255,255,255,0.06);}
+  .step-num{
+    width:24px; height:24px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:800; background:linear-gradient(135deg,#2563EB,#7C3AED); color:#fff;
+  }
+  .step-txt{font-size:13px; line-height:1.6; color:var(--text-secondary); padding-top:1px;}
+
+  .tip-card{
+    display:flex; gap:11px; padding:14px; margin-top:12px;
+    background:linear-gradient(120deg, rgba(251,191,36,0.1), rgba(249,115,22,0.06));
+  }
+  .tip-ic{flex-shrink:0;}
+  .tip-txt{font-size:12px; line-height:1.7; color:var(--text-secondary);}
+  .tip-txt b{color:var(--text-primary);}
+
+  /* ===== Log form ===== */
+  .log-card{padding:16px; margin-top:16px;}
+  .log-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;}
+  .log-field{background:rgba(255,255,255,0.04); border:1px solid var(--border-soft); border-radius:14px; padding:10px 12px;}
+  .log-label{font-size:10px; color:var(--text-dim); font-weight:700; margin-bottom:3px;}
+  .log-val{font-size:16px; font-weight:800;}
+  .log-btn{
+    text-align:center; padding:13px 0; font-size:13.5px; font-weight:800; color:#fff; border-radius:16px;
+    background:linear-gradient(135deg,#2563EB,#7C3AED); box-shadow:0 8px 20px rgba(37,99,235,0.3);
+  }
+</style>
+</head>
+<body>
+<div class="bg-ambient"></div>
+<div class="app">
+
+  <div class="top-bar">
+    <a href="exercises.html" class="back-btn" style="text-decoration:none;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>
+    </a>
+    <span class="top-title">مكتبة التمارين</span>
+  </div>
+
+  <!-- ===== Media (image/GIF placeholder) ===== -->
+  <div class="media-frame">
+    <span class="media-tag">GIF توضيحي</span>
+    <div class="media-play">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+    </div>
+    <div class="media-dots">
+      <div class="media-dot on"></div><div class="media-dot"></div><div class="media-dot"></div>
+    </div>
+  </div>
+
+  <div class="ex-title-row">
+    <div>
+      <p class="ex-title">بنش برس بار</p>
+      <span class="ex-eng">Barbell Bench Press</span>
+    </div>
+    <div class="fav-btn">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-5-3.5-9-6.9-9-11.2C3 6.6 5.5 4 8.5 4c1.7 0 3.2.8 4.2 2 1-1.2 2.5-2 4.2-2 3 0 5.5 2.6 5.5 5.8 0 4.3-4 7.7-9 11.2Z"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== Muscles ===== -->
+  <div class="glass muscle-card">
+    <div class="muscle-legend">
+      <div class="legend-item"><span class="legend-dot" style="background:#3B82F6;color:#3B82F6"></span>أساسية</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#64748B;color:#64748B"></span>مساعدة</div>
+    </div>
+    <div class="muscle-tags">
+      <span class="m-tag primary">الصدر الأوسط</span>
+      <span class="m-tag primary">الصدر السفلي</span>
+      <span class="m-tag secondary">الترايسبس</span>
+      <span class="m-tag secondary">الأكتاف الأمامية</span>
+    </div>
+  </div>
+
+  <!-- ===== Correct form steps ===== -->
+  <p class="section-title">طريقة الأداء الصحيح</p>
+  <div class="glass steps-card">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-txt">استلقِ على البنش والقدمين ثابتة على الأرض، والكتفين والمؤخرة ملاصقين للبنش.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-txt">امسك البار بمسافة أعرض من الكتفين شوية، وانزله ببطء لمنتصف الصدر.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-txt">ادفع البار لأعلى بقوة مع الزفير، من غير ما ترفع المؤخرة عن البنش.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-txt">كرر الحركة بشكل متحكم، وحافظ على المرفقين بزاوية 45 درجة مش مفرودين بالكامل جانبًا.</div>
+    </div>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-ic">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+    </div>
+    <div class="tip-txt"><b>نصيحة:</b> لو حسيت بألم في الكتف، قلل مدى الحركة وركّز على الانقباض في أعلى الحركة بدل ما تزود الوزن.</div>
+  </div>
+
+  <!-- ===== Quick log ===== -->
+  <p class="section-title">تسجيل الأداء</p>
+  <div class="glass log-card">
+    <div class="log-grid">
+      <div class="log-field">
+        <div class="log-label">الوزن (كجم)</div>
+        <input id="logWeight" type="number" step="0.5" inputmode="decimal" value="80" style="width:100%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+      </div>
+      <div class="log-field">
+        <div class="log-label">مجموعات × تكرارات</div>
+        <div style="display:flex; align-items:center; gap:4px;">
+          <input id="logSets" type="number" value="4" style="width:38%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+          <span class="log-val" style="font-weight:400; color:var(--text-dim);">×</span>
+          <input id="logReps" type="number" value="8" style="width:38%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+        </div>
+      </div>
+    </div>
+    <div class="log-btn" id="logSaveBtn">تسجيل هذه المجموعة</div>
+    <div id="logFeedback" style="text-align:center; font-size:11.5px; color:#4ADE80; font-weight:700; margin-top:10px; display:none;">تم الحفظ ✓ +25 XP</div>
+  </div>
+
+</div>
+<script src="app-data.js"></script>
+<script>
+  const EXERCISE_ID = "bench-press-barbell";
+  const last = window.GymakStore.getLastExerciseLog(EXERCISE_ID);
+  if (last) {
+    document.getElementById("logWeight").value = last.weight;
+    document.getElementById("logSets").value = last.sets;
+    document.getElementById("logReps").value = last.reps;
+  }
+
+  document.getElementById("logSaveBtn").addEventListener("click", () => {
+    const w = parseFloat(document.getElementById("logWeight").value) || 0;
+    const sets = parseInt(document.getElementById("logSets").value) || 0;
+    const reps = parseInt(document.getElementById("logReps").value) || 0;
+    if (w <= 0 || sets <= 0 || reps <= 0) return;
+    window.GymakStore.logSet(EXERCISE_ID, w, sets, reps);
+    const fb = document.getElementById("logFeedback");
+    fb.style.display = "block";
+    setTimeout(() => { fb.style.display = "none"; }, 2500);
+  });
+</script>
+</body>
+</html>
