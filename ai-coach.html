@@ -135,66 +135,138 @@
   </div>
 </div>
 
-<div class="chat-body">
-
+<div class="chat-body" id="chatBody"></div>
+<template id="botMsgTpl">
   <div class="msg-row">
     <div class="msg-ic">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
     </div>
-    <div class="msg-bubble">أهلاً كريم 👋 لاحظت إنك مكمّل 14 يوم متتالي وقوتك في البنش زادت 15 كجم الشهر ده. عايز اقترح عليك تعديل بسيط؟</div>
+    <div class="msg-bubble"></div>
   </div>
+</template>
 
-  <div class="msg-row me">
-    <div class="msg-bubble">اه اتفضل</div>
-  </div>
-
-  <div class="msg-row">
-    <div class="msg-ic">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
-    </div>
-    <div class="msg-bubble">يوم الأرجل عندك مجهود أقل من باقي الأيام. اقترحت جدول معدّل بيزود حجم تمرين الأرجل 20% مع نفس عدد الأيام.</div>
-  </div>
-
-  <div class="glass suggest-card">
-    <div class="suggest-head">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
-      <span class="suggest-title">تعديل مقترح: يوم الأرجل</span>
-    </div>
-    <div class="suggest-days">
-      <span class="sg-day">سكوات 5×5</span>
-      <span class="sg-day">ديدليفت روماني 4×8</span>
-      <span class="sg-day">+ عجل 4×15</span>
-    </div>
-    <div class="suggest-actions">
-      <div class="sg-btn primary">تطبيق التعديل</div>
-      <div class="sg-btn ghost">مش دلوقتي</div>
-    </div>
-  </div>
-
-  <div class="msg-row">
-    <div class="msg-ic">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/></svg>
-    </div>
-    <div class="msg-bubble">وبالنسبة للأكل، بما إن هدفك تنشيف، حاول تزوّد البروتين لـ 2 جم لكل كيلو من وزنك، وخلي الكارب حوالين وقت التمرين بس.</div>
-  </div>
-
-</div>
-
-<div class="quick-prompts">
-  <div class="qp-chip">📋 اقترح برنامج جديد</div>
-  <div class="qp-chip">🍽️ نصايح غذائية</div>
-  <div class="qp-chip">📊 حلل تقدمي</div>
-  <div class="qp-chip">🎯 عدّل هدفي</div>
+<div class="quick-prompts" id="quickPrompts">
+  <div class="qp-chip" data-q="اقترح برنامج">📋 اقترح برنامج جديد</div>
+  <div class="qp-chip" data-q="نصايح غذائية">🍽️ نصايح غذائية</div>
+  <div class="qp-chip" data-q="حلل تقدمي">📊 حلل تقدمي</div>
+  <div class="qp-chip" data-q="عدّل هدفي">🎯 عدّل هدفي</div>
 </div>
 
 <div class="input-bar">
   <div class="glass input-field">
-    <input type="text" placeholder="اسأل مدربك الذكي..." />
+    <input type="text" id="chatInput" placeholder="اسأل مدربك الذكي..." />
   </div>
-  <div class="send-btn">
+  <div class="send-btn" id="sendBtn" style="cursor:pointer;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 14-7-7 14-2-5-5-2Z"/></svg>
   </div>
 </div>
 
+<script src="app-data.js"></script>
+<script>
+  const store = window.GymakStore;
+  const chatBody = document.getElementById("chatBody");
+  const tpl = document.getElementById("botMsgTpl");
+
+  function addBotMsg(text) {
+    const node = tpl.content.cloneNode(true);
+    node.querySelector(".msg-bubble").textContent = text;
+    chatBody.appendChild(node);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+  function addMeMsg(text) {
+    const row = document.createElement("div");
+    row.className = "msg-row me";
+    row.innerHTML = `<div class="msg-bubble"></div>`;
+    row.querySelector(".msg-bubble").textContent = text;
+    chatBody.appendChild(row);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  function fmt(n){ return Number(n).toLocaleString('en-US', {maximumFractionDigits:1}); }
+
+  function welcomeMessage() {
+    const streak = store.getStreak();
+    const progress = store.getStrengthProgress(1)[0];
+    if (streak >= 3 && progress) {
+      return `أهلاً! مكمّل ${streak} يوم متتالي، وقوتك في ${progress.name} زادت من ${progress.from} لـ ${progress.to} كجم. حابب أساعدك في إيه؟`;
+    }
+    if (streak >= 1) {
+      return `أهلاً! مكمّل ${streak} يوم متتالي، استمر كده. حابب أساعدك في إيه؟`;
+    }
+    return "أهلاً! دوّن أول تمرين أو وزن عشان أقدر أحلل تقدمك وأساعدك أكتر. حابب أساعدك في إيه؟";
+  }
+
+  function answerFor(q) {
+    const text = q.toLowerCase();
+
+    if (text.includes("برنامج")) {
+      const active = store.getActiveProgram();
+      if (active) return `عندك حاليًا برنامج ${active.name} مطبّق (${active.daysPerWeek}). لو عايز تغيّره ادخل على "برامج التدريب الجاهزة" من صفحة حسابي.`;
+      return `لسه ما اخترتش برنامج تدريب. تقدر تختار واحد من "برامج التدريب الجاهزة" في صفحة حسابي حسب مستواك وعدد أيامك المتاحة.`;
+    }
+
+    if (text.includes("أكل") || text.includes("غذائ") || text.includes("تغذية") || text.includes("بروتين")) {
+      const latest = store.getLatestWeight();
+      if (latest) {
+        const protein = Math.round(latest.weight * 1.8);
+        return `بوزنك الحالي (${fmt(latest.weight)} كجم)، هدف بروتين معقول يوميًا حوالي ${protein} جم. وزّعه على 3-4 وجبات، وخلي الكارب حوالين وقت التمرين.`;
+      }
+      return "سجّل وزنك الأول من الصفحة الرئيسية عشان أقدر أحسبلك احتياجك من البروتين بدقة.";
+    }
+
+    if (text.includes("حلل") || text.includes("تقدم") || text.includes("إحصائ")) {
+      const streak = store.getStreak();
+      const best = store.getBestStreak();
+      const tonnage = Math.round(store.getTonnage(30));
+      const top = store.getStrengthProgress(1)[0];
+      let msg = `ستريكك الحالي ${streak} يوم (أعلى رقم ${best}). إجمالي الأوزان المرفوعة آخر 30 يوم: ${fmt(tonnage)} كجم.`;
+      if (top) msg += ` أكتر تمرين تحسّن فيه: ${top.name} (${top.pct > 0 ? "+" : ""}${top.pct}%).`;
+      return msg;
+    }
+
+    if (text.includes("هدف")) {
+      const current = store.getGoalWeight();
+      const val = prompt("اكتب وزنك المستهدف (كجم):", current || "");
+      if (val && !isNaN(parseFloat(val))) {
+        store.setGoalWeight(parseFloat(val));
+        return `تمام، هدفك الجديد هو ${fmt(parseFloat(val))} كجم. هتلاقيه محدث في الصفحة الرئيسية.`;
+      }
+      return "محدّش أي تغيير في الهدف.";
+    }
+
+    if (text.includes("وزن")) {
+      const diff = store.getWeightDiffOverDays(7);
+      if (diff) return `وزنك اتغيّر ${diff.diff > 0 ? "+" : ""}${diff.diff} كجم آخر أسبوع (من ${diff.from} لـ ${diff.to}).`;
+      return "سجّل وزنك أكتر من مرة عشان أقدر أتابع تغيّره معاك.";
+    }
+
+    return "تقدر تسألني عن: البرنامج، النصايح الغذائية، تحليل تقدمك، أو تعديل هدف الوزن.";
+  }
+
+  function handleUserText(q) {
+    if (!q.trim()) return;
+    addMeMsg(q);
+    setTimeout(() => addBotMsg(answerFor(q)), 300);
+  }
+
+  document.getElementById("quickPrompts").addEventListener("click", (e) => {
+    const chip = e.target.closest(".qp-chip");
+    if (!chip) return;
+    handleUserText(chip.dataset.q);
+  });
+
+  document.getElementById("sendBtn").addEventListener("click", () => {
+    const input = document.getElementById("chatInput");
+    handleUserText(input.value);
+    input.value = "";
+  });
+  document.getElementById("chatInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") document.getElementById("sendBtn").click();
+  });
+
+  addBotMsg(welcomeMessage());
+
+  if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
+</script>
 </body>
 </html>

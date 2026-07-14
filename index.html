@@ -186,6 +186,8 @@
   .muscle-dot.shoulders{background:#A855F7; color:#A855F7;}
   .muscle-dot.back{background:#22C55E; color:#22C55E;}
   .muscle-dot.legs{background:#F59E0B; color:#F59E0B;}
+  .muscle-dot.arms{background:#EC4899; color:#EC4899;}
+  .muscle-dot.core{background:#14B8A6; color:#14B8A6;}
 
   /* ===== Plan rows ===== */
   .plan-row{display:flex; align-items:center; justify-content:space-between; padding:11px 0;}
@@ -238,17 +240,17 @@
       <div class="level-badge" id="levelBadge">Lv. 7</div>
     </div>
     <div class="header-info">
-      <p class="header-name">أهلاً، كريم 👋</p>
+      <p class="header-name" id="headerName">أهلاً 👋</p>
       <p class="header-sub">
-        <span id="xpText">1,240 / 1,800 XP</span>
+        <span id="xpText">0 / 500 XP</span>
         <span style="color:var(--text-dim)">·</span>
-        <span id="xpRemainText">باقي 560 للمستوى 8</span>
+        <span id="xpRemainText"></span>
       </p>
-      <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:69%"></div></div>
+      <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
     </div>
-    <div class="header-icon-btn">
+    <a href="profile.html" class="header-icon-btn" style="text-decoration:none;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"><path d="M12 2a7 7 0 0 0-7 7v3.6c0 .5-.2 1-.6 1.4L3 16.5h18l-1.4-2.5c-.4-.4-.6-.9-.6-1.4V9a7 7 0 0 0-7-7Z"/><path d="M9 19a3 3 0 0 0 6 0"/></svg>
-    </div>
+    </a>
   </div>
 
   <!-- ===== Streak (hero) ===== -->
@@ -296,8 +298,8 @@
         </span>
       </div>
       <div class="weight-meta">
-        <div class="weight-meta-row"><span>الدهون</span><span id="bodyFatVal">16.8%</span></div>
-        <div class="weight-meta-row"><span>الهدف</span><span id="goalVal">76.0 كجم</span></div>
+        <div class="weight-meta-row"><span>الدهون</span><span id="bodyFatVal">—</span></div>
+        <div class="weight-meta-row" id="goalRow" style="cursor:pointer;"><span>الهدف</span><span id="goalVal">—</span></div>
       </div>
     </div>
 
@@ -316,49 +318,30 @@
   <!-- ===== InBody mini section ===== -->
   <div class="section-title">
     <h2>قياسات الجسم</h2>
-    <a href="#">التفاصيل</a>
+    <a href="stats.html">التفاصيل</a>
   </div>
   <div class="inbody-grid">
     <div class="glass inbody-card">
-      <span class="inbody-val">16.8<small>%</small></span>
+      <span class="inbody-val" id="ibFat">—</span>
       <div class="inbody-name">دهون الجسم</div>
     </div>
     <div class="glass inbody-card">
-      <span class="inbody-val">61.2</span>
-      <div class="inbody-name">كتلة عضلية</div>
+      <span class="inbody-val" id="ibMonthDiff">—</span>
+      <div class="inbody-name">تغيّر الشهر</div>
     </div>
-    <div class="glass inbody-card">
-      <span class="inbody-val">23.9</span>
+    <div class="glass inbody-card" id="ibBMI" style="cursor:pointer;">
+      <span class="inbody-val" id="ibBMIVal">—</span>
       <div class="inbody-name">BMI</div>
     </div>
   </div>
 
-  <!-- ===== Today's plan ===== -->
+  <!-- ===== Recent activity ===== -->
   <div class="section-title">
-    <h2>خطة اليوم <span class="plan-tag">Push Day</span></h2>
-    <a href="#">عرض الكل</a>
+    <h2>آخر تمرين مسجّل</h2>
+    <a href="exercises.html">عرض الكل</a>
   </div>
-  <div class="glass" style="padding:6px 14px;">
-    <div class="plan-row">
-      <div class="plan-info">
-        <span class="muscle-dot chest"></span>
-        <div>
-          <div class="plan-name">بنش برس</div>
-          <div class="plan-sub">صدر · 4 × 8</div>
-        </div>
-      </div>
-      <span class="plan-weight">80 كجم</span>
-    </div>
-    <div class="plan-row">
-      <div class="plan-info">
-        <span class="muscle-dot shoulders"></span>
-        <div>
-          <div class="plan-name">ضغط أكتاف</div>
-          <div class="plan-sub">أكتاف · 3 × 10</div>
-        </div>
-      </div>
-      <span class="plan-weight">45 كجم</span>
-    </div>
+  <div class="glass" style="padding:6px 14px;" id="recentPlanCard">
+    <div style="text-align:center; padding:20px 10px; color:var(--text-dim); font-size:12.5px;">لسه ما سجلتش أي تمرين. دوس "تسجيل تمرين" وابدأ.</div>
   </div>
 
 </div>
@@ -422,7 +405,8 @@
     const week = store.getLast7DaysStatus();
     const goal = store.getGoalWeight();
 
-    // Header / XP
+    // Header name / XP
+    document.getElementById("headerName").textContent = "أهلاً، " + (profile.name || "بطل الجيم") + " 👋";
     document.getElementById("levelBadge").textContent = "Lv. " + profile.level;
     document.getElementById("xpText").textContent = fmt(profile.xp) + " / " + fmt(profile.xpNext) + " XP";
     document.getElementById("xpRemainText").textContent = "باقي " + fmt(profile.xpNext - profile.xp) + " للمستوى " + (profile.level + 1);
@@ -462,6 +446,32 @@
         diffText.textContent = "ثابت هذا الأسبوع";
       }
   }
+
+    // Body measurements
+    document.getElementById("ibFat").innerHTML = (latest && latest.bodyFat != null) ? latest.bodyFat + "<small>%</small>" : "—";
+    const monthDiff = store.getWeightDiffOverDays(30);
+    document.getElementById("ibMonthDiff").textContent = monthDiff ? ((monthDiff.diff > 0 ? "+" : "") + monthDiff.diff) : "—";
+    const bmi = store.getBMI();
+    document.getElementById("ibBMIVal").textContent = bmi != null ? bmi : "حدد طولك";
+
+    // Recent exercises
+    const recent = store.getRecentExerciseLogs(3);
+    const planCard = document.getElementById("recentPlanCard");
+    if (!recent.length) {
+      planCard.innerHTML = `<div style="text-align:center; padding:20px 10px; color:var(--text-dim); font-size:12.5px;">لسه ما سجلتش أي تمرين. دوس "تسجيل تمرين" وابدأ.</div>`;
+    } else {
+      planCard.innerHTML = recent.map((r) => `
+        <div class="plan-row">
+          <div class="plan-info">
+            <span class="muscle-dot ${r.muscle}"></span>
+            <div>
+              <div class="plan-name">${r.name}</div>
+              <div class="plan-sub">${r.muscleLabel} · ${r.sets} × ${r.reps}</div>
+            </div>
+          </div>
+          <span class="plan-weight">${fmt(r.weight)} كجم</span>
+        </div>`).join("");
+    }
   }
 
   // ===== Weight modal wiring =====
@@ -484,6 +494,18 @@
     window.GymakStore.addWeight(w, bf === "" ? null : parseFloat(bf));
     closeModal();
     renderHome();
+  });
+
+  document.getElementById("ibBMI").addEventListener("click", () => {
+    const current = window.GymakStore.getProfile().heightCm;
+    const val = prompt("اكتب طولك بالسنتيمتر (لحساب BMI):", current || "");
+    if (val && !isNaN(parseFloat(val))) { window.GymakStore.setHeight(parseFloat(val)); renderHome(); }
+  });
+
+  document.getElementById("goalRow").addEventListener("click", () => {
+    const current = window.GymakStore.getGoalWeight();
+    const val = prompt("اكتب وزنك المستهدف (كجم):", current || "");
+    if (val && !isNaN(parseFloat(val))) { window.GymakStore.setGoalWeight(parseFloat(val)); renderHome(); }
   });
 
   renderHome();
