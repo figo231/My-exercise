@@ -142,8 +142,8 @@
 
   <div class="ex-title-row">
     <div>
-      <p class="ex-title">بنش برس بار</p>
-      <span class="ex-eng">Barbell Bench Press</span>
+      <p class="ex-title" id="exTitle">بنش برس بار</p>
+      <span class="ex-eng" id="exEng">Barbell Bench Press</span>
     </div>
     <div class="fav-btn">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FDBA74" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-5-3.5-9-6.9-9-11.2C3 6.6 5.5 4 8.5 4c1.7 0 3.2.8 4.2 2 1-1.2 2.5-2 4.2-2 3 0 5.5 2.6 5.5 5.8 0 4.3-4 7.7-9 11.2Z"/></svg>
@@ -156,7 +156,7 @@
       <div class="legend-item"><span class="legend-dot" style="background:#3B82F6;color:#3B82F6"></span>أساسية</div>
       <div class="legend-item"><span class="legend-dot" style="background:#64748B;color:#64748B"></span>مساعدة</div>
     </div>
-    <div class="muscle-tags">
+    <div class="muscle-tags" id="muscleTags">
       <span class="m-tag primary">الصدر الأوسط</span>
       <span class="m-tag primary">الصدر السفلي</span>
       <span class="m-tag secondary">الترايسبس</span>
@@ -165,6 +165,7 @@
   </div>
 
   <!-- ===== Correct form steps ===== -->
+  <div id="stepsSection">
   <p class="section-title">طريقة الأداء الصحيح</p>
   <div class="glass steps-card">
     <div class="step-row">
@@ -191,6 +192,11 @@
     </div>
     <div class="tip-txt"><b>نصيحة:</b> لو حسيت بألم في الكتف، قلل مدى الحركة وركّز على الانقباض في أعلى الحركة بدل ما تزود الوزن.</div>
   </div>
+  </div>
+
+  <div id="customNoteSection" class="glass" style="display:none; padding:14px;">
+    <p style="font-size:12px; color:var(--text-secondary); line-height:1.7; margin:0;">التمرين ده مضاف منك، فلسه معندناش صورة/GIF أو خطوات أداء جاهزة ليه. لو حابب، تقدر تضيف ملاحظاتك الخاصة بعدين.</p>
+  </div>
 
   <!-- ===== Quick log ===== -->
   <p class="section-title">تسجيل الأداء</p>
@@ -216,8 +222,31 @@
 </div>
 <script src="app-data.js"></script>
 <script>
-  const EXERCISE_ID = "bench-press-barbell";
-  const last = window.GymakStore.getLastExerciseLog(EXERCISE_ID);
+  const params = new URLSearchParams(window.location.search);
+  const EXERCISE_ID = params.get("id") || "bench-press-barbell";
+  const store = window.GymakStore;
+  const exercise = store.getExerciseById(EXERCISE_ID);
+
+  if (exercise) {
+    document.title = exercise.name + " — جيمك";
+    document.getElementById("exTitle").textContent = exercise.name;
+    document.getElementById("exEng").textContent = exercise.muscleLabel + (exercise.secondary ? " · " + exercise.secondary : "");
+
+    const tagsEl = document.getElementById("muscleTags");
+    tagsEl.innerHTML = `<span class="m-tag primary">${exercise.muscleLabel}</span>` +
+      (exercise.secondary ? `<span class="m-tag secondary">${exercise.secondary}</span>` : "");
+
+    // show authored steps only for the seeded bench-press example; generic note for the rest
+    if (exercise.id !== "bench-press-barbell") {
+      document.getElementById("stepsSection").style.display = "none";
+      document.getElementById("customNoteSection").style.display = "block";
+    }
+
+    document.getElementById("logSets").value = exercise.sets;
+    document.getElementById("logReps").value = exercise.reps;
+  }
+
+  const last = store.getLastExerciseLog(EXERCISE_ID);
   if (last) {
     document.getElementById("logWeight").value = last.weight;
     document.getElementById("logSets").value = last.sets;
@@ -229,7 +258,7 @@
     const sets = parseInt(document.getElementById("logSets").value) || 0;
     const reps = parseInt(document.getElementById("logReps").value) || 0;
     if (w <= 0 || sets <= 0 || reps <= 0) return;
-    window.GymakStore.logSet(EXERCISE_ID, w, sets, reps);
+    store.logSet(EXERCISE_ID, w, sets, reps);
     const fb = document.getElementById("logFeedback");
     fb.style.display = "block";
     setTimeout(() => { fb.style.display = "none"; }, 2500);

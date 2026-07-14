@@ -141,195 +141,30 @@
       <h1 class="page-title">التمارين</h1>
       <div class="page-count">32 تمرين · 6 مجموعات عضلية</div>
     </div>
-    <div class="add-btn">
+    <div class="add-btn" id="addExBtn" style="cursor:pointer;">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
     </div>
   </div>
 
   <div class="glass search-bar">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-    <input type="text" placeholder="دور على تمرين..." />
+    <input type="text" id="searchInput" placeholder="دور على تمرين..." />
   </div>
 
-  <div class="filters">
-    <div class="chip active">الكل</div>
-    <div class="chip"><span class="dot m-chest" style="background:currentColor"></span>صدر</div>
-    <div class="chip"><span class="dot m-back" style="background:currentColor"></span>ظهر</div>
-    <div class="chip"><span class="dot m-shoulders" style="background:currentColor"></span>أكتاف</div>
-    <div class="chip"><span class="dot m-legs" style="background:currentColor"></span>أرجل</div>
-    <div class="chip"><span class="dot m-arms" style="background:currentColor"></span>ذراعين</div>
-    <div class="chip"><span class="dot m-core" style="background:currentColor"></span>بطن</div>
+  <div class="filters" id="filterBar">
+    <div class="chip active" data-muscle="all">الكل</div>
+    <div class="chip" data-muscle="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span>صدر</div>
+    <div class="chip" data-muscle="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span>ظهر</div>
+    <div class="chip" data-muscle="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span>أكتاف</div>
+    <div class="chip" data-muscle="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span>أرجل</div>
+    <div class="chip" data-muscle="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span>ذراعين</div>
+    <div class="chip" data-muscle="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span>بطن</div>
   </div>
 
-  <!-- ===== Chest group ===== -->
-  <div class="group-head">
-    <span class="dot m-chest" style="background:currentColor"></span>
-    صدر
-    <span class="group-count">5 تمارين</span>
-  </div>
+  <div id="exerciseList"></div>
 
-  <a href="exercise-detail.html" class="glass ex-card" style="text-decoration:none;color:inherit;">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="28" height="28">
-        <rect x="3" y="13.5" width="5" height="5" rx="1.4" fill="#3B82F6" opacity=".9"/>
-        <rect x="1" y="14.6" width="2.6" height="2.8" rx=".8" fill="#3B82F6" opacity=".6"/>
-        <rect x="24" y="13.5" width="5" height="5" rx="1.4" fill="#3B82F6" opacity=".9"/>
-        <rect x="28.4" y="14.6" width="2.6" height="2.8" rx=".8" fill="#3B82F6" opacity=".6"/>
-        <rect x="8" y="15.1" width="16" height="1.8" rx=".9" fill="#93C5FD"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">بنش برس بار</p>
-      <div class="ex-tags">
-        <span class="badge primary">صدر</span>
-        <span class="badge secondary">ترايسبس</span>
-      </div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets" id="lastSets">4×8</div>
-      <div class="ex-last" id="lastWeight">آخر مرة 80 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </a>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26">
-        <g transform="rotate(-18 16 16)">
-          <rect x="5" y="12.5" width="7" height="7" rx="2" fill="#3B82F6" opacity=".9"/>
-          <rect x="20" y="12.5" width="7" height="7" rx="2" fill="#3B82F6" opacity=".9"/>
-          <rect x="11" y="15" width="10" height="2" rx="1" fill="#93C5FD"/>
-        </g>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">بنش برس دمبل مائل</p>
-      <div class="ex-tags">
-        <span class="badge primary">صدر علوي</span>
-        <span class="badge secondary">أكتاف</span>
-      </div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">3×10</div>
-      <div class="ex-last">آخر مرة 26 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </div>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round">
-        <path d="M6 5v22M26 5v22" stroke-width="2.4" opacity=".55"/>
-        <circle cx="6" cy="6" r="2" fill="#3B82F6" stroke="none"/>
-        <circle cx="26" cy="6" r="2" fill="#3B82F6" stroke="none"/>
-        <path d="M6 8 16 20M26 8 16 20" stroke="#93C5FD"/>
-        <circle cx="16" cy="21.5" r="1.8" fill="#93C5FD" stroke="none"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">كابل كروس أوفر</p>
-      <div class="ex-tags"><span class="badge primary">صدر داخلي</span></div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">3×12</div>
-      <div class="ex-last">آخر مرة 15 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </div>
-
-  <!-- ===== Shoulders group ===== -->
-  <div class="group-head">
-    <span class="dot m-shoulders" style="background:currentColor"></span>
-    أكتاف
-    <span class="group-count">4 تمارين</span>
-  </div>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26">
-        <rect x="12.5" y="4" width="7" height="19" rx="2" fill="#A855F7" opacity=".85"/>
-        <rect x="4" y="8" width="6" height="4.5" rx="1.3" fill="#A855F7"/>
-        <rect x="22" y="8" width="6" height="4.5" rx="1.3" fill="#A855F7"/>
-        <rect x="4" y="24.5" width="24" height="2.2" rx="1.1" fill="#DDD6FE" opacity=".5"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">ضغط أكتاف بار</p>
-      <div class="ex-tags"><span class="badge primary">أكتاف أمامية</span></div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">3×10</div>
-      <div class="ex-last">آخر مرة 45 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </div>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26">
-        <rect x="4" y="12.5" width="6" height="6" rx="1.8" fill="#A855F7" opacity=".9"/>
-        <rect x="22" y="12.5" width="6" height="6" rx="1.8" fill="#A855F7" opacity=".9"/>
-        <rect x="10" y="14.6" width="12" height="1.8" rx=".9" fill="#DDD6FE"/>
-        <path d="M16 20c-2.5 2.5-2.5 5 0 7" stroke="#DDD6FE" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".55"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">رفرفة جانبية دمبل</p>
-      <div class="ex-tags"><span class="badge primary">أكتاف جانبية</span></div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">4×15</div>
-      <div class="ex-last">آخر مرة 10 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </div>
-
-  <!-- ===== Back group ===== -->
-  <div class="group-head">
-    <span class="dot m-back" style="background:currentColor"></span>
-    ظهر
-    <span class="group-count">6 تمارين</span>
-  </div>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26">
-        <circle cx="16" cy="5" r="2.2" fill="#22C55E"/>
-        <path d="M16 7.2v6" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round"/>
-        <path d="M6 16 16 13.2 26 16" stroke="#22C55E" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <rect x="4" y="16" width="4.5" height="3.6" rx="1.2" fill="#86EFAC"/>
-        <rect x="23.5" y="16" width="4.5" height="3.6" rx="1.2" fill="#86EFAC"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">سحب أمامي (Lat Pulldown)</p>
-      <div class="ex-tags"><span class="badge primary">ظهر علوي</span><span class="badge secondary">بايسبس</span></div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">4×10</div>
-      <div class="ex-last">آخر مرة 55 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
-  </div>
-
-  <div class="glass ex-card">
-    <div class="ex-thumb">
-      <svg viewBox="0 0 32 32" width="26" height="26">
-        <rect x="2.5" y="10" width="6.5" height="14" rx="2" fill="#22C55E" opacity=".9"/>
-        <rect x="23" y="10" width="6.5" height="14" rx="2" fill="#22C55E" opacity=".9"/>
-        <rect x="9" y="16" width="14" height="2" rx="1" fill="#86EFAC"/>
-        <rect x="2" y="25.4" width="28" height="1.8" rx=".9" fill="#86EFAC" opacity=".35"/>
-      </svg>
-    </div>
-    <div class="ex-info">
-      <p class="ex-name">ديدليفت</p>
-      <div class="ex-tags"><span class="badge primary">ظهر سفلي</span><span class="badge secondary">أرجل خلفية</span></div>
-    </div>
-    <div class="ex-meta">
-      <div class="ex-sets">4×6</div>
-      <div class="ex-last">آخر مرة 100 كجم</div>
-    </div>
-    <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+  <div id="emptyState" style="display:none; text-align:center; padding:40px 20px; color:var(--text-dim);">
+    <p style="font-size:13px;">مفيش تمارين في القسم ده لسه.<br/>دوس على + فوق عشان تضيف تمرين جديد.</p>
   </div>
 
 
@@ -356,16 +191,179 @@
   </div>
 </div>
 
-<script>
-  if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
-</script>
+<!-- ===== Add exercise modal ===== -->
+<div id="addExOverlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(3px); display:none; align-items:flex-end; z-index:100;">
+  <div class="glass" style="width:100%; max-width:480px; margin:0 auto; border-radius:24px 24px 0 0; padding:20px; padding-bottom:calc(20px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto;">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:4px;margin:0 auto 16px;"></div>
+    <h3 style="font-size:15px; font-weight:800; margin:0 0 16px;">إضافة تمرين جديد</h3>
+
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">اسم التمرين</label>
+    <input id="newExName" type="text" placeholder="مثال: سكوات بار" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
+
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">العضلة الأساسية</label>
+    <div id="muscleSelectRow" style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;">
+      <div class="chip ms-opt active" data-m="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span>صدر</div>
+      <div class="chip ms-opt" data-m="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span>ظهر</div>
+      <div class="chip ms-opt" data-m="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span>أكتاف</div>
+      <div class="chip ms-opt" data-m="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span>أرجل</div>
+      <div class="chip ms-opt" data-m="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span>ذراعين</div>
+      <div class="chip ms-opt" data-m="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span>بطن</div>
+    </div>
+
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">عضلات مساعدة (اختياري)</label>
+    <input id="newExSecondary" type="text" placeholder="مثال: ترايسبس" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
+
+    <div style="display:flex; gap:10px; margin-bottom:16px;">
+      <div style="flex:1;">
+        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">مجموعات</label>
+        <input id="newExSets" type="number" value="3" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
+      </div>
+      <div style="flex:1;">
+        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">تكرارات</label>
+        <input id="newExReps" type="number" value="10" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px;">
+      <div id="addExCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(255,255,255,0.05); border:1px solid var(--border-soft);">إلغاء</div>
+      <div id="addExSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);">إضافة التمرين</div>
+    </div>
+  </div>
+</div>
+
 <script src="app-data.js"></script>
 <script>
-  const last = window.GymakStore.getLastExerciseLog("bench-press-barbell");
-  if (last) {
-    document.getElementById("lastSets").textContent = last.sets + "×" + last.reps;
-    document.getElementById("lastWeight").textContent = "آخر مرة " + last.weight + " كجم";
+  const store = window.GymakStore;
+  let activeMuscleFilter = "all";
+  let searchQuery = "";
+
+  function genericThumbSVG(color) {
+    return `<svg viewBox="0 0 32 32" width="24" height="24">
+      <rect x="3" y="13.5" width="5.5" height="5" rx="1.4" fill="${color}" opacity=".9"/>
+      <rect x="23.5" y="13.5" width="5.5" height="5" rx="1.4" fill="${color}" opacity=".9"/>
+      <rect x="8.5" y="15.1" width="15" height="1.8" rx=".9" fill="${color}" opacity=".55"/>
+    </svg>`;
   }
+
+  function cardHTML(ex) {
+    const meta = store.getMuscleMeta(ex.muscle);
+    const last = store.getLastExerciseLog(ex.id);
+    const setsLabel = last ? (last.sets + "×" + last.reps) : (ex.sets + "×" + ex.reps);
+    const lastLabel = last ? ("آخر مرة " + last.weight + " كجم") : "لسه ما اتسجلش";
+    return `
+    <a href="exercise-detail.html?id=${encodeURIComponent(ex.id)}" class="glass ex-card" style="text-decoration:none;color:inherit;">
+      <div class="ex-thumb">${genericThumbSVG(meta.color)}</div>
+      <div class="ex-info">
+        <p class="ex-name">${ex.name}</p>
+        <div class="ex-tags">
+          <span class="badge primary">${ex.muscleLabel}</span>
+          ${ex.secondary ? `<span class="badge secondary">${ex.secondary}</span>` : ""}
+        </div>
+      </div>
+      <div class="ex-meta">
+        <div class="ex-sets">${setsLabel}</div>
+        <div class="ex-last">${lastLabel}</div>
+      </div>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+    </a>`;
+  }
+
+  function renderExercises() {
+    const all = store.getExercises();
+    const filtered = all.filter((ex) => {
+      const matchMuscle = activeMuscleFilter === "all" || ex.muscle === activeMuscleFilter;
+      const matchSearch = !searchQuery || ex.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchMuscle && matchSearch;
+    });
+
+    const listEl = document.getElementById("exerciseList");
+    const emptyEl = document.getElementById("emptyState");
+
+    if (!filtered.length) {
+      listEl.innerHTML = "";
+      emptyEl.style.display = "block";
+      return;
+    }
+    emptyEl.style.display = "none";
+
+    // group by muscle
+    const groups = {};
+    filtered.forEach((ex) => {
+      if (!groups[ex.muscle]) groups[ex.muscle] = [];
+      groups[ex.muscle].push(ex);
+    });
+
+    let html = "";
+    Object.keys(groups).forEach((muscle) => {
+      const meta = store.getMuscleMeta(muscle);
+      const items = groups[muscle];
+      html += `<div class="group-head">
+        <span class="dot" style="background:${meta.color};color:${meta.color}"></span>
+        ${meta.label}
+        <span class="group-count">${items.length} تمرين</span>
+      </div>`;
+      items.forEach((ex) => { html += cardHTML(ex); });
+    });
+    listEl.innerHTML = html;
+  }
+
+  // ===== Filters =====
+  document.getElementById("filterBar").addEventListener("click", (e) => {
+    const chip = e.target.closest(".chip");
+    if (!chip) return;
+    document.querySelectorAll("#filterBar .chip").forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    activeMuscleFilter = chip.dataset.muscle;
+    renderExercises();
+  });
+
+  // ===== Search =====
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    searchQuery = e.target.value;
+    renderExercises();
+  });
+
+  // ===== Add exercise modal =====
+  const addOverlay = document.getElementById("addExOverlay");
+  let selectedMuscle = "chest";
+
+  document.getElementById("addExBtn").addEventListener("click", () => {
+    document.getElementById("newExName").value = "";
+    document.getElementById("newExSecondary").value = "";
+    document.getElementById("newExSets").value = 3;
+    document.getElementById("newExReps").value = 10;
+    selectedMuscle = "chest";
+    document.querySelectorAll(".ms-opt").forEach((c) => c.classList.toggle("active", c.dataset.m === "chest"));
+    addOverlay.style.display = "flex";
+  });
+  document.getElementById("addExCancel").addEventListener("click", () => { addOverlay.style.display = "none"; });
+  addOverlay.addEventListener("click", (e) => { if (e.target === addOverlay) addOverlay.style.display = "none"; });
+
+  document.getElementById("muscleSelectRow").addEventListener("click", (e) => {
+    const chip = e.target.closest(".ms-opt");
+    if (!chip) return;
+    document.querySelectorAll(".ms-opt").forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    selectedMuscle = chip.dataset.m;
+  });
+
+  document.getElementById("addExSave").addEventListener("click", () => {
+    const name = document.getElementById("newExName").value.trim();
+    if (!name) { document.getElementById("newExName").focus(); return; }
+    store.addExercise({
+      name,
+      muscle: selectedMuscle,
+      secondary: document.getElementById("newExSecondary").value.trim(),
+      sets: document.getElementById("newExSets").value,
+      reps: document.getElementById("newExReps").value,
+    });
+    addOverlay.style.display = "none";
+    renderExercises();
+  });
+
+  renderExercises();
+
+  if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
 </script>
 </body>
 </html>
