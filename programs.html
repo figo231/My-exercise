@@ -70,6 +70,7 @@
   .lvl-beginner{background:rgba(34,197,94,0.14); color:#4ADE80;}
   .lvl-inter{background:rgba(251,191,36,0.14); color:#FBBF24;}
   .lvl-advanced{background:rgba(244,63,94,0.14); color:#FB7185;}
+  .rec-badge{display:inline-flex; align-items:center; gap:4px; font-size:9.5px; font-weight:800; color:#FDBA74; background:rgba(251,146,60,0.14); padding:3px 9px; border-radius:20px; margin-bottom:8px;}
 
   .prog-days{display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap;}
   .day-chip{
@@ -126,8 +127,8 @@
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg>
     </a>
     <div>
-      <h1 class="page-title">برامج التدريب الجاهزة</h1>
-      <div class="page-sub">اختار برنامج وطبّقه تلقائيًا على جدولك</div>
+      <h1 class="page-title" data-i18n="prog_title">برامج التدريب الجاهزة</h1>
+      <div class="page-sub" data-i18n="prog_sub">اختار برنامج وطبّقه تلقائيًا على جدولك</div>
     </div>
   </div>
 
@@ -161,8 +162,8 @@
     <p class="detail-section-label">تقسيم الأيام</p>
     <div class="detail-day-list" id="detailDayList"></div>
     <div class="detail-actions">
-      <button id="detailCloseBtn" type="button">إغلاق</button>
-      <button id="detailApplyBtn" type="button">تطبيق البرنامج</button>
+      <button id="detailCloseBtn" type="button" data-i18n="prog_close">إغلاق</button>
+      <button id="detailApplyBtn" type="button" data-i18n="prog_apply">تطبيق البرنامج</button>
     </div>
   </div>
 </div>
@@ -185,10 +186,13 @@
       banner.style.display = "none";
     }
 
+    const recommendedId = store.getRecommendedProgramId();
     document.getElementById("programList").innerHTML = programs.map((p) => {
       const isActive = active && active.id === p.id;
+      const isRecommended = recommendedId === p.id && !isActive;
       return `
       <div class="glass prog-card">
+        ${isRecommended ? `<div class="rec-badge">★ ${store.t("prog_recommended")}</div>` : ""}
         <div class="prog-head">
           <div>
             <p class="prog-name">${p.name}</p>
@@ -201,8 +205,8 @@
         </div>
         <p class="prog-desc">${p.desc}</p>
         <div class="prog-actions">
-          <div class="btn-apply" data-id="${p.id}" style="cursor:pointer; ${isActive ? "opacity:.7;" : ""}">${isActive ? "مطبّق حاليًا ✓" : "تطبيق البرنامج"}</div>
-          <div class="btn-detail" data-toggle="${p.id}" style="cursor:pointer;">التفاصيل</div>
+          <div class="btn-apply" data-id="${p.id}" style="cursor:pointer; ${isActive ? "opacity:.7;" : ""}">${isActive ? store.t("prog_applied") : store.t("prog_apply")}</div>
+          <div class="btn-detail" data-toggle="${p.id}" style="cursor:pointer;">${store.t("prog_details")}</div>
         </div>
       </div>`;
     }).join("");
@@ -243,7 +247,7 @@
 
     const isActive = store.getActiveProgram()?.id === id;
     const applyBtn = document.getElementById("detailApplyBtn");
-    applyBtn.textContent = isActive ? "مطبّق حاليًا ✓" : "تطبيق البرنامج";
+    applyBtn.textContent = isActive ? store.t("prog_applied") : store.t("prog_apply");
     applyBtn.classList.toggle("applied", isActive);
 
     detailModal.classList.add("open");
@@ -262,7 +266,9 @@
     closeDetailModal();
   });
 
+  store.applyI18n();
   render();
+  store.scheduleReminder();
 
   if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
 </script>

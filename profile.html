@@ -267,7 +267,7 @@
         <div class="p-stat"><span id="statStreak">0</span><label>أفضل سلسلة</label></div>
       </div>
 
-      <button class="edit-profile-btn" id="editProfileBtn">تعديل الملف الشخصي</button>
+      <button class="edit-profile-btn" id="editProfileBtn" data-i18n="edit_profile_btn">تعديل الملف الشخصي</button>
 
       <div class="p-xp-wrap">
         <div class="p-xp-nums"><span id="pXpCurrent">1,240 XP</span><span id="pXpNext">1,800 XP</span></div>
@@ -300,8 +300,15 @@
         <textarea id="editBio" maxlength="150" placeholder="اكتب نبذة عنك، هدفك من التمرين..."></textarea>
         <div class="bio-counter"><span id="bioCounter">0</span>/150</div>
       </div>
+      <div class="edit-field">
+        <label data-i18n="edit_gender_label">الجنس</label>
+        <div class="seg-control" id="genderSeg">
+          <div class="seg-option" data-gender="male" data-i18n="edit_gender_male">راجل</div>
+          <div class="seg-option" data-gender="female" data-i18n="edit_gender_female">ست</div>
+        </div>
+      </div>
       <div class="edit-sheet-actions">
-        <button id="editCancelBtn" type="button">إلغاء</button>
+        <button id="editCancelBtn" type="button" data-i18n="ex_add_cancel">إلغاء</button>
         <button id="editSaveBtn" type="button">حفظ</button>
       </div>
     </div>
@@ -313,23 +320,23 @@
   <div class="modal-backdrop" id="langModalBackdrop">
     <div class="edit-sheet">
       <div class="edit-sheet-handle"></div>
-      <h3>اللغة والوحدات</h3>
+      <h3 data-i18n="settings_lang">اللغة والوحدات</h3>
       <div class="settings-block">
-        <span class="settings-block-label">اللغة</span>
-        <div class="lang-row-static">
-          <span class="lname">العربية</span>
-          <span class="lnote">— الوحيدة المتاحة حاليًا</span>
+        <span class="settings-block-label">Language / اللغة</span>
+        <div class="seg-control" id="langSeg">
+          <div class="seg-option" data-lang="ar">العربية</div>
+          <div class="seg-option" data-lang="en">English</div>
         </div>
       </div>
       <div class="settings-block">
-        <span class="settings-block-label">وحدة الوزن</span>
+        <span class="settings-block-label">وحدة الوزن / Unit</span>
         <div class="seg-control" id="unitSeg">
           <div class="seg-option" data-unit="kg">كجم</div>
           <div class="seg-option" data-unit="lb">رطل (lb)</div>
         </div>
       </div>
       <div class="edit-sheet-actions">
-        <button id="langCancelBtn" type="button">إغلاق</button>
+        <button id="langCancelBtn" type="button" data-i18n="prog_close">إغلاق</button>
       </div>
     </div>
   </div>
@@ -338,7 +345,7 @@
   <div class="modal-backdrop" id="notifModalBackdrop">
     <div class="edit-sheet">
       <div class="edit-sheet-handle"></div>
-      <h3>الإشعارات والتذكيرات</h3>
+      <h3 data-i18n="settings_notif">الإشعارات والتذكيرات</h3>
       <div class="toggle-row">
         <div>
           <div class="trow-label">تذكير يومي بالتمرين</div>
@@ -353,9 +360,9 @@
         <label for="notifTime">ميعاد التذكير</label>
         <input type="time" id="notifTime" value="19:00" />
       </div>
-      <p class="notif-note">الإشعار بيتبعت من المتصفح، فلازم تسمح بالإشعارات وتسيب التطبيق مفتوح في تبويب (أو في الخلفية على الموبايل) عشان يوصلك في الميعاد.</p>
+      <p class="notif-note">الإشعار بيتبعت من المتصفح، فلازم تسمح بالإشعارات وتسيب التطبيق مفتوح (أو في الخلفية على الموبايل) عشان يوصلك في الميعاد. دلوقتي التذكير بيفضل شغال طول ما أي صفحة من التطبيق مفتوحة.</p>
       <div class="edit-sheet-actions" style="margin-top:14px;">
-        <button id="notifCancelBtn" type="button">إلغاء</button>
+        <button id="notifCancelBtn" type="button" data-i18n="ex_add_cancel">إلغاء</button>
         <button id="notifSaveBtn" type="button">حفظ</button>
       </div>
     </div>
@@ -415,26 +422,31 @@
   </div>
 
   <!-- ===== Settings ===== -->
-  <div class="section-title"><h2>الإعدادات</h2></div>
+  <div class="section-title"><h2 data-i18n="settings_title">الإعدادات</h2></div>
   <div class="glass" style="padding:2px 14px;">
     <div class="settings-row" id="settingsLang" style="cursor:pointer;">
       <div class="settings-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 0 0 0 18M12 3a15 15 0 0 1 0 18M3 12h18"/></svg></div>
-      <span class="settings-name">اللغة والوحدات</span>
+      <span class="settings-name" data-i18n="settings_lang">اللغة والوحدات</span>
       <svg class="settings-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
     </div>
     <div class="settings-row" id="settingsNotif" style="cursor:pointer;">
       <div class="settings-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"><path d="M12 2a7 7 0 0 0-7 7v3.6c0 .5-.2 1-.6 1.4L3 16.5h18l-1.4-2.5c-.4-.4-.6-.9-.6-1.4V9a7 7 0 0 0-7-7Z"/><path d="M9 19a3 3 0 0 0 6 0"/></svg></div>
-      <span class="settings-name">الإشعارات والتذكيرات</span>
+      <span class="settings-name" data-i18n="settings_notif">الإشعارات والتذكيرات</span>
       <svg class="settings-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
     </div>
     <a href="programs.html" class="settings-row" style="text-decoration:none;color:inherit;">
       <div class="settings-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div>
-      <span class="settings-name">برامج التدريب الجاهزة</span>
+      <span class="settings-name" data-i18n="settings_programs">برامج التدريب الجاهزة</span>
+      <svg class="settings-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
+    </a>
+    <a href="#" id="settingsContactDev" class="settings-row" style="text-decoration:none;color:inherit;">
+      <div class="settings-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg></div>
+      <span class="settings-name" data-i18n="settings_contact_dev">تواصل مع المطور</span>
       <svg class="settings-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
     </a>
     <div class="settings-row" id="settingsReset" style="cursor:pointer;">
       <div class="settings-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></div>
-      <span class="settings-name" style="color:#F43F5E;">إعادة تعيين كل البيانات</span>
+      <span class="settings-name" style="color:#F43F5E;" data-i18n="settings_reset">إعادة تعيين كل البيانات</span>
       <svg class="settings-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
     </div>
   </div>
@@ -445,19 +457,19 @@
   <div class="bottom-nav-inner">
     <a href="index.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10h14V10"/></svg>
-      الرئيسية
+      <span data-i18n="nav_home">الرئيسية</span>
     </a>
     <a href="exercises.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
-      التمارين
+      <span data-i18n="nav_exercises">التمارين</span>
     </a>
     <a href="stats.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19v-8M16 19V9M22 19V3"/></svg>
-      الإحصائيات
+      <span data-i18n="nav_stats">الإحصائيات</span>
     </a>
     <a href="profile.html" class="nav-item active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
-      حسابي
+      <span data-i18n="nav_profile">حسابي</span>
     </a>
   </div>
 </div>
@@ -651,10 +663,19 @@
     editBio.value = profile.bio || "";
     bioCounter.textContent = editBio.value.length;
     renderGradientRow();
+    document.querySelectorAll("#genderSeg .seg-option").forEach((el) => {
+      el.classList.toggle("active", el.dataset.gender === profile.gender);
+    });
     editModal.classList.add("open");
     setTimeout(() => editName.focus(), 50);
   }
   function closeEditModal() { editModal.classList.remove("open"); }
+
+  document.getElementById("genderSeg").addEventListener("click", (e) => {
+    const opt = e.target.closest(".seg-option");
+    if (!opt) return;
+    document.querySelectorAll("#genderSeg .seg-option").forEach((o) => o.classList.toggle("active", o === opt));
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
@@ -673,6 +694,8 @@
     store.setProfileName(editName.value);
     store.setUsername(editUsername.value);
     store.setBio(editBio.value);
+    const genderOpt = document.querySelector("#genderSeg .seg-option.active");
+    store.setGender(genderOpt ? genderOpt.dataset.gender : null);
     closeEditModal();
     renderProfile();
   });
@@ -713,8 +736,12 @@
   const langModal = document.getElementById("langModalBackdrop");
   function openLangModal() {
     const unit = store.getSettings().unit;
+    const lang = store.getLang();
     document.querySelectorAll("#unitSeg .seg-option").forEach((el) => {
       el.classList.toggle("active", el.dataset.unit === unit);
+    });
+    document.querySelectorAll("#langSeg .seg-option").forEach((el) => {
+      el.classList.toggle("active", el.dataset.lang === lang);
     });
     langModal.classList.add("open");
   }
@@ -728,6 +755,21 @@
       document.querySelectorAll("#unitSeg .seg-option").forEach((o) => o.classList.toggle("active", o === el));
       renderProfile();
     });
+  });
+  document.querySelectorAll("#langSeg .seg-option").forEach((el) => {
+    el.addEventListener("click", () => {
+      if (el.dataset.lang === store.getLang()) return;
+      store.setLang(el.dataset.lang);
+      store.applyI18n();
+      document.querySelectorAll("#langSeg .seg-option").forEach((o) => o.classList.toggle("active", o === el));
+      renderProfile();
+    });
+  });
+
+  // ===== Contact developer (WhatsApp) =====
+  document.getElementById("settingsContactDev").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.open(store.getDeveloperWhatsAppUrl(), "_blank");
   });
 
   // ===== Notifications & Reminders modal =====
@@ -750,23 +792,7 @@
   document.getElementById("notifCancelBtn").addEventListener("click", closeNotifModal);
   notifModal.addEventListener("click", (e) => { if (e.target === notifModal) closeNotifModal(); });
 
-  let notifTimerId = null;
-  function scheduleReminder() {
-    if (notifTimerId) { clearTimeout(notifTimerId); notifTimerId = null; }
-    const s = store.getSettings();
-    if (!s.notifEnabled || Notification.permission !== "granted") return;
-    const [h, m] = (s.notifTime || "19:00").split(":").map(Number);
-    const now = new Date();
-    let next = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0);
-    if (next <= now) next.setDate(next.getDate() + 1);
-    const delay = next - now;
-    notifTimerId = setTimeout(() => {
-      try {
-        new Notification("جيمك — وقت التمرين 💪", { body: "متنساش تسجل تمرينك النهاردة.", icon: "icon-192.png" });
-      } catch (e) {}
-      scheduleReminder(); // re-arm for tomorrow
-    }, delay);
-  }
+  function scheduleReminder() { store.scheduleReminder(); }
   document.getElementById("notifSaveBtn").addEventListener("click", async () => {
     const wantsOn = notifToggle.checked;
     if (wantsOn && !("Notification" in window)) {
@@ -800,6 +826,7 @@
     }
   });
 
+  store.applyI18n();
   renderProfile();
 </script>
 </body>

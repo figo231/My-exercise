@@ -68,6 +68,24 @@
   .media-dot{width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.3);}
   .media-dot.on{background:#fff; width:16px; border-radius:4px;}
 
+  /* ===== Animated movement guide (offline, no external assets) ===== */
+  .move-guide{width:150px; height:150px;}
+  .mg-static{transform-origin:center;}
+  .mg-arm-up{ animation: mgArmUp 1.6s ease-in-out infinite; transform-origin: 76px 70px; }
+  @keyframes mgArmUp{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-38deg); } }
+  .mg-arm-up2{ animation: mgArmUp2 1.6s ease-in-out infinite; transform-origin: 76px 70px; }
+  @keyframes mgArmUp2{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(38deg); } }
+  .mg-squat{ animation: mgSquat 1.8s ease-in-out infinite; transform-origin: 76px 60px; }
+  @keyframes mgSquat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(14px) scaleY(0.9); } }
+  .mg-pull{ animation: mgPull 1.6s ease-in-out infinite; transform-origin: 76px 55px; }
+  @keyframes mgPull{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(-10px); } }
+  .mg-flex{ animation: mgFlex 1.4s ease-in-out infinite; transform-origin: 76px 75px; }
+  @keyframes mgFlex{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.06); } }
+  .mg-twist{ animation: mgTwist 1.8s ease-in-out infinite; transform-origin: 76px 90px; }
+  @keyframes mgTwist{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(8deg); } }
+  .mg-pulse{ animation: mgPulse 1.4s ease-in-out infinite; }
+  @keyframes mgPulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
+
   /* ===== Title block ===== */
   .ex-title-row{display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;}
   .ex-title{font-size:20px; font-weight:900; margin:0 0 5px;}
@@ -129,15 +147,10 @@
     <span class="top-title">مكتبة التمارين</span>
   </div>
 
-  <!-- ===== Media (image/GIF placeholder) ===== -->
+  <!-- ===== Animated movement guide ===== -->
   <div class="media-frame">
-    <span class="media-tag">GIF توضيحي</span>
-    <div class="media-play">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
-    </div>
-    <div class="media-dots">
-      <div class="media-dot on"></div><div class="media-dot"></div><div class="media-dot"></div>
-    </div>
+    <span class="media-tag" data-i18n="detail_media_tag">توضيح الحركة</span>
+    <svg class="move-guide" id="moveGuideSvg" viewBox="0 0 150 150" fill="none"></svg>
   </div>
 
   <div class="ex-title-row">
@@ -153,8 +166,8 @@
   <!-- ===== Muscles ===== -->
   <div class="glass muscle-card">
     <div class="muscle-legend">
-      <div class="legend-item"><span class="legend-dot" style="background:#3B82F6;color:#3B82F6"></span>أساسية</div>
-      <div class="legend-item"><span class="legend-dot" style="background:#64748B;color:#64748B"></span>مساعدة</div>
+      <div class="legend-item"><span class="legend-dot" style="background:#3B82F6;color:#3B82F6"></span><span data-i18n="detail_muscles_primary">أساسية</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#64748B;color:#64748B"></span><span data-i18n="detail_muscles_secondary">مساعدة</span></div>
     </div>
     <div class="muscle-tags" id="muscleTags">
       <span class="m-tag primary">الصدر الأوسط</span>
@@ -166,7 +179,7 @@
 
   <!-- ===== Correct form steps ===== -->
   <div id="stepsSection">
-  <p class="section-title">طريقة الأداء الصحيح</p>
+  <p class="section-title" data-i18n="detail_steps_title">طريقة الأداء الصحيح</p>
   <div class="glass steps-card">
     <div class="step-row">
       <div class="step-num">1</div>
@@ -199,7 +212,7 @@
   </div>
 
   <!-- ===== Quick log ===== -->
-  <p class="section-title">تسجيل الأداء</p>
+  <p class="section-title" data-i18n="detail_log_title">تسجيل الأداء</p>
   <div class="glass log-card">
     <div class="log-grid">
       <div class="log-field">
@@ -215,7 +228,7 @@
         </div>
       </div>
     </div>
-    <div class="log-btn" id="logSaveBtn">تسجيل هذه المجموعة</div>
+    <div class="log-btn" id="logSaveBtn" data-i18n="detail_log_btn">تسجيل هذه المجموعة</div>
     <div id="logFeedback" style="text-align:center; font-size:11.5px; color:#4ADE80; font-weight:700; margin-top:10px; display:none;">تم الحفظ ✓ +25 XP</div>
   </div>
 
@@ -227,10 +240,44 @@
   const store = window.GymakStore;
   const exercise = store.getExerciseById(EXERCISE_ID);
 
+  // ===== Animated movement guide (simple offline SVG loop, no external files) =====
+  function renderMoveGuide(muscle) {
+    const meta = store.getMuscleMeta(muscle);
+    const c = meta.color;
+    const svg = document.getElementById("moveGuideSvg");
+    // shared body parts
+    const head = `<circle cx="76" cy="38" r="10" fill="${c}" opacity=".9"/>`;
+    const torso = `<rect x="70" y="48" width="12" height="42" rx="6" fill="${c}" opacity=".9"/>`;
+    const legsStatic = `<rect x="65" y="90" width="8" height="34" rx="4" fill="${c}" opacity=".6"/><rect x="80" y="90" width="8" height="34" rx="4" fill="${c}" opacity=".6"/>`;
+
+    let extra = "";
+    if (muscle === "chest" || muscle === "shoulders" || muscle === "arms") {
+      extra = `
+        <g class="mg-arm-up"><rect x="70" y="52" width="30" height="8" rx="4" fill="${c}"/></g>
+        <g class="mg-arm-up2"><rect x="52" y="52" width="30" height="8" rx="4" fill="${c}"/></g>
+        ${head}${torso}${legsStatic}`;
+    } else if (muscle === "back") {
+      extra = `
+        <g class="mg-pull">${head}${torso}<rect x="86" y="52" width="30" height="7" rx="3.5" fill="${c}"/></g>
+        ${legsStatic}`;
+    } else if (muscle === "legs") {
+      extra = `<g class="mg-squat">${head}${torso}<rect x="55" y="52" width="20" height="7" rx="3.5" fill="${c}" opacity=".8"/><rect x="77" y="52" width="20" height="7" rx="3.5" fill="${c}" opacity=".8"/></g>${legsStatic}`;
+    } else if (muscle === "core") {
+      extra = `<g class="mg-twist">${head}${torso}<rect x="66" y="52" width="8" height="30" rx="4" fill="${c}" opacity=".7"/><rect x="78" y="52" width="8" height="30" rx="4" fill="${c}" opacity=".7"/></g>${legsStatic}`;
+    } else {
+      extra = `<g class="mg-flex">${head}${torso}</g>${legsStatic}`;
+    }
+    svg.innerHTML = `<ellipse cx="76" cy="128" rx="34" ry="6" fill="${c}" opacity=".12"/>${extra}`;
+  }
+
+  store.applyI18n();
+  store.scheduleReminder();
+
   if (exercise) {
     document.title = exercise.name + " — جيمك";
     document.getElementById("exTitle").textContent = exercise.name;
     document.getElementById("exEng").textContent = exercise.muscleLabel + (exercise.secondary ? " · " + exercise.secondary : "");
+    renderMoveGuide(exercise.muscle);
 
     const tagsEl = document.getElementById("muscleTags");
     tagsEl.innerHTML = `<span class="m-tag primary">${exercise.muscleLabel}</span>` +
@@ -244,6 +291,8 @@
 
     document.getElementById("logSets").value = exercise.sets;
     document.getElementById("logReps").value = exercise.reps;
+  } else {
+    renderMoveGuide("chest");
   }
 
   document.getElementById("logWeightLabel").textContent = "الوزن (" + store.unitLabel() + ")";

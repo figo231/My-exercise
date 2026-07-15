@@ -67,7 +67,7 @@
     background:linear-gradient(135deg,#2563EB,#7C3AED);
   }
   .msg-bubble{
-    max-width:78%; padding:11px 14px; border-radius:16px; font-size:13px; line-height:1.7;
+    max-width:78%; padding:11px 14px; border-radius:16px; font-size:13px; line-height:1.7; white-space:pre-line;
   }
   .msg-row:not(.me) .msg-bubble{
     background:var(--card-glass); border:1px solid var(--border-soft); border-bottom-right-radius:4px; color:var(--text-primary);
@@ -130,8 +130,8 @@
     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v1a4 4 0 0 0 8 0V6a4 4 0 0 0-4-4Z"/><path d="M6 21v-1a6 6 0 0 1 12 0v1"/><path d="M9 10.5s1 1 3 1 3-1 3-1"/></svg>
   </div>
   <div class="coach-meta">
-    <p class="coach-title">المدرّب الذكي</p>
-    <div class="coach-status"><span class="status-dot"></span>متصل الآن</div>
+    <p class="coach-title" data-i18n="ai_title">المدرّب الذكي</p>
+    <div class="coach-status"><span class="status-dot"></span><span data-i18n="ai_status">متصل الآن</span></div>
   </div>
 </div>
 
@@ -147,6 +147,7 @@
 
 <div class="quick-prompts" id="quickPrompts">
   <div class="qp-chip" data-q="اقترح برنامج">📋 اقترح برنامج جديد</div>
+  <div class="qp-chip" data-q="احسبلي سعرات: 2 بيضة ورغيف عيش بلدي وكوب لبن">🍳 احسبلي سعرات وجبة</div>
   <div class="qp-chip" data-q="نصايح غذائية">🍽️ نصايح غذائية</div>
   <div class="qp-chip" data-q="حلل تقدمي">📊 حلل تقدمي</div>
   <div class="qp-chip" data-q="عدّل هدفي">🎯 عدّل هدفي</div>
@@ -154,7 +155,7 @@
 
 <div class="input-bar">
   <div class="glass input-field">
-    <input type="text" id="chatInput" placeholder="اسأل مدربك الذكي..." />
+    <input type="text" id="chatInput" placeholder="اسأل مدربك الذكي..." data-i18n-ph="ai_input_ph" />
   </div>
   <div class="send-btn" id="sendBtn" style="cursor:pointer;">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 14-7-7 14-2-5-5-2Z"/></svg>
@@ -183,47 +184,131 @@
   }
 
   function fmt(n){ return Number(n).toLocaleString('en-US', {maximumFractionDigits:1}); }
+  function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
 
   function welcomeMessage() {
     const streak = store.getStreak();
     const progress = store.getStrengthProgress(1)[0];
+    const profile = store.getProfile();
+    const namePart = profile.name ? `يا ${profile.name}` : "";
     if (streak >= 3 && progress) {
-      return `أهلاً! مكمّل ${streak} يوم متتالي، وقوتك في ${progress.name} زادت من ${progress.from} لـ ${progress.to} كجم. حابب أساعدك في إيه؟`;
+      return `أهلاً ${namePart}! مكمّل ${streak} يوم متتالي، وقوتك في ${progress.name} زادت من ${progress.from} لـ ${progress.to} كجم. حابب أساعدك في إيه النهاردة؟`;
     }
     if (streak >= 1) {
-      return `أهلاً! مكمّل ${streak} يوم متتالي، استمر كده. حابب أساعدك في إيه؟`;
+      return `أهلاً ${namePart}! مكمّل ${streak} يوم متتالي، استمر كده. حابب أساعدك في إيه؟`;
     }
-    return "أهلاً! دوّن أول تمرين أو وزن عشان أقدر أحلل تقدمك وأساعدك أكتر. حابب أساعدك في إيه؟";
+    return `أهلاً ${namePart}! دوّن أول تمرين أو وزن عشان أقدر أحلل تقدمك وأساعدك أكتر. حابب أساعدك في إيه؟`;
+  }
+
+  function findExerciseByName(text) {
+    const all = store.getExercises();
+    const norm = (s) => s.toLowerCase().trim();
+    return all.find((ex) => norm(text).includes(norm(ex.name))) || null;
   }
 
   function answerFor(q) {
-    const text = q.toLowerCase();
+    const text = q.toLowerCase().trim();
+    const profile = store.getProfile();
 
+    // ===== Greetings / thanks =====
+    if (/^(أهلا|اهلا|هاي|هلا|صباح|مساء|hi|hello)/.test(text)) {
+      return pick([
+        "أهلاً بيك! جاهز نشتغل على تمرينك النهاردة؟",
+        "هاي! حابب أساعدك في البرنامج، الأكل، ولا تحليل تقدمك؟",
+      ]);
+    }
+    if (text.includes("شكرا") || text.includes("متشكر") || text.includes("thanks")) {
+      return "العفو! أنا موجود أي وقت محتاجني، كمّل كده 💪";
+    }
+
+    // ===== Food / calorie calculation =====
+    const foodTriggerWords = ["سعرات", "احسب", "إحسب", "اكلت", "أكلت", "هاكل", "فطار", "فطاري", "غدا", "غدائي", "عشا", "عشائي", "وجبة", "كام سعرة"];
+    const hasFoodTrigger = foodTriggerWords.some((w) => text.includes(w));
+    const foodItems = store.parseFood(q);
+    if (hasFoodTrigger || foodItems.length >= 2) {
+      if (!foodItems.length) {
+        return "اكتبلي الأكلات بوضوح زي: \"فطاري 2 بيضة ورغيف عيش بلدي وكوب لبن\" وأنا هحسبلك السعرات والبروتين تلقائي.";
+      }
+      const dayEntry = store.logFoodEntries(foodItems);
+      const target = store.getDailyCalorieTarget();
+      const breakdown = foodItems.map((it) => `• ${it.name} (${it.grams}جم) — ${it.kcal} سعرة`).join("\n");
+      const mealKcal = foodItems.reduce((a, i) => a + i.kcal, 0);
+      let msg = `حسبتلك الوجبة دي:\n${breakdown}\n\nإجمالي الوجبة: ${mealKcal} سعرة (بروتين ${foodItems.reduce((a, i) => a + i.protein, 0).toFixed(1)} جم)\n\nإجمالي سعراتك النهاردة: ${dayEntry.totalKcal} سعرة`;
+      if (target) {
+        const remaining = target - dayEntry.totalKcal;
+        msg += remaining >= 0 ? ` من أصل ${target} — باقيلك ${remaining} سعرة.` : ` من أصل ${target} — زودت ${Math.abs(remaining)} سعرة عن هدفك.`;
+      } else {
+        msg += `. سجّل وزنك من الصفحة الرئيسية عشان أقدرلك أحدد هدف سعرات يومي دقيق.`;
+      }
+      return msg;
+    }
+
+    // ===== Ask about a specific exercise by name =====
+    const foundEx = findExerciseByName(text);
+    if (foundEx && (text.includes("ازاي") || text.includes("طريقة") || text.includes("إزاي") || text.includes("اداء") || text.includes("أداء"))) {
+      const last = store.getLastExerciseLog(foundEx.id);
+      let msg = `${foundEx.name} بيستهدف ${foundEx.muscleLabel}${foundEx.secondary ? " ومعاه " + foundEx.secondary : ""}. الرينج المقترح ${foundEx.sets}×${foundEx.reps}.`;
+      if (last) msg += ` آخر مرة سجلت ${last.weight} كجم بـ ${last.sets}×${last.reps}.`;
+      msg += " تقدر تشوف خطوات الأداء بالتفصيل في صفحة التمرين نفسه.";
+      return msg;
+    }
+
+    // ===== Program =====
     if (text.includes("برنامج")) {
       const active = store.getActiveProgram();
       if (active) return `عندك حاليًا برنامج ${active.name} مطبّق (${active.daysPerWeek}). لو عايز تغيّره ادخل على "برامج التدريب الجاهزة" من صفحة حسابي.`;
+      const recId = store.getRecommendedProgramId();
+      const recProg = recId ? store.getPrograms().find((p) => p.id === recId) : null;
+      if (recProg) return `لسه ما اخترتش برنامج. بناءً على بياناتك أقترحلك تجرب "${recProg.name}" (${recProg.daysPerWeek})، تقدر تطبّقه من "برامج التدريب الجاهزة" في صفحة حسابي.`;
       return `لسه ما اخترتش برنامج تدريب. تقدر تختار واحد من "برامج التدريب الجاهزة" في صفحة حسابي حسب مستواك وعدد أيامك المتاحة.`;
     }
 
-    if (text.includes("أكل") || text.includes("غذائ") || text.includes("تغذية") || text.includes("بروتين")) {
+    // ===== Nutrition / protein =====
+    if (text.includes("أكل") || text.includes("اكل") || text.includes("غذائ") || text.includes("تغذية") || text.includes("بروتين") || text.includes("دايت")) {
       const latest = store.getLatestWeight();
       if (latest) {
         const protein = Math.round(latest.weight * 1.8);
-        return `بوزنك الحالي (${fmt(latest.weight)} كجم)، هدف بروتين معقول يوميًا حوالي ${protein} جم. وزّعه على 3-4 وجبات، وخلي الكارب حوالين وقت التمرين.`;
+        const cutting = text.includes("تنشيف") || text.includes("خس") || text.includes("نزل وزن");
+        const bulking = text.includes("تضخيم") || text.includes("زياد") || text.includes("بلك");
+        let extra = "";
+        if (cutting) extra = " ولو هدفك تنشيف، خلي عجز السعرات معقول (300-500 سعرة تحت احتياجك) عشان محتفظش بالعضل.";
+        if (bulking) extra = " ولو هدفك تضخيم، زوّد 250-400 سعرة فوق احتياجك مع تدريب مقاومة منتظم.";
+        return `بوزنك الحالي (${fmt(latest.weight)} كجم)، هدف بروتين معقول يوميًا حوالي ${protein} جم. وزّعه على 3-4 وجبات، وخلي الكارب حوالين وقت التمرين.${extra}`;
       }
       return "سجّل وزنك الأول من الصفحة الرئيسية عشان أقدر أحسبلك احتياجك من البروتين بدقة.";
     }
 
-    if (text.includes("حلل") || text.includes("تقدم") || text.includes("إحصائ")) {
+    // ===== Injury / pain — safe, non-diagnostic guidance =====
+    if (text.includes("وجع") || text.includes("ألم") || text.includes("الم ") || text.includes("إصاب") || text.includes("اصاب")) {
+      return "لو حاسس بألم فعلي (مش مجرد تعب عضلي عادي)، وقف التمرين اللي بيوجعك فورًا ولا تكمل عليه. الراحة والثلج بيساعدوا في أول 48 ساعة، ولو الألم استمر أو كان قوي، لازم تشوف دكتور عظام أو مختص علاج طبيعي بدل ما تكمل تمرين. أنا مش بديل عن استشارة طبية.";
+    }
+
+    // ===== Motivation =====
+    if (text.includes("كسل") || text.includes("مش قادر") || text.includes("تعبان") || text.includes("motivation") || text.includes("مش عايز اكمل")) {
+      const streak = store.getStreak();
+      if (streak >= 1) return `إنت فعلاً مكمّل ${streak} يوم متتالي، متكسرش السلسلة دلوقتي. جرب تمرين خفيف اليوم بدل ما تسيبه خالص، أحسن من إنك توقف كليًا.`;
+      return "كل بطل بدأ بيوم واحد بس. مش لازم تمرين قوي، ابدأ بربع ساعة بسيطة وسجلها هنا، وهتلاقي نفسك عايز تكمل.";
+    }
+
+    // ===== Sleep / recovery =====
+    if (text.includes("نوم") || text.includes("راحة") || text.includes("recovery")) {
+      return "النوم من أهم عوامل بناء العضل — حاول تاخد 7-8 ساعات، وخلي بين كل تمرين لنفس العضلة يوم أو يومين راحة على الأقل عشان تسترجع صح.";
+    }
+
+    // ===== Progress analysis =====
+    if (text.includes("حلل") || text.includes("تقدم") || text.includes("إحصائ") || text.includes("احصائ")) {
       const streak = store.getStreak();
       const best = store.getBestStreak();
       const tonnage = Math.round(store.getTonnage(30));
       const top = store.getStrengthProgress(1)[0];
+      const bmi = store.getBMI();
       let msg = `ستريكك الحالي ${streak} يوم (أعلى رقم ${best}). إجمالي الأوزان المرفوعة آخر 30 يوم: ${fmt(tonnage)} كجم.`;
       if (top) msg += ` أكتر تمرين تحسّن فيه: ${top.name} (${top.pct > 0 ? "+" : ""}${top.pct}%).`;
+      if (bmi) msg += ` مؤشر كتلة جسمك حاليًا ${bmi}.`;
       return msg;
     }
 
+    // ===== Goal weight =====
     if (text.includes("هدف")) {
       const current = store.getGoalWeight();
       const val = prompt("اكتب وزنك المستهدف (كجم):", current || "");
@@ -234,13 +319,24 @@
       return "محدّش أي تغيير في الهدف.";
     }
 
+    // ===== Weight trend =====
     if (text.includes("وزن")) {
       const diff = store.getWeightDiffOverDays(7);
       if (diff) return `وزنك اتغيّر ${diff.diff > 0 ? "+" : ""}${diff.diff} كجم آخر أسبوع (من ${diff.from} لـ ${diff.to}).`;
       return "سجّل وزنك أكتر من مرة عشان أقدر أتابع تغيّره معاك.";
     }
 
-    return "تقدر تسألني عن: البرنامج، النصايح الغذائية، تحليل تقدمك، أو تعديل هدف الوزن.";
+    // ===== Achievements =====
+    if (text.includes("انجاز") || text.includes("إنجاز") || text.includes("مستوى") || text.includes("لفل") || text.includes("level")) {
+      const ach = store.getAchievements();
+      const unlocked = ach.filter((a) => a.unlocked).length;
+      return `فاتح ${unlocked} من ${ach.length} إنجاز لحد دلوقتي، وإنت في المستوى ${profile.level}. كمّل تسجيل تمارينك عشان تفتح الباقي.`;
+    }
+
+    return pick([
+      "تقدر تسألني عن: البرنامج، النصايح الغذائية، تحليل تقدمك، تعديل هدف الوزن، أو حتى ازاي تأدي تمرين معين.",
+      "أنا هنا أساعدك في التمرين، الأكل، أو أي سؤال عن تقدمك — قولي محتاج إيه بالظبط؟",
+    ]);
   }
 
   function handleUserText(q) {
@@ -264,7 +360,9 @@
     if (e.key === "Enter") document.getElementById("sendBtn").click();
   });
 
+  store.applyI18n();
   addBotMsg(welcomeMessage());
+  store.scheduleReminder();
 
   if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
 </script>

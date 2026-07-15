@@ -138,7 +138,7 @@
 
   <div class="page-head">
     <div>
-      <h1 class="page-title">التمارين</h1>
+      <h1 class="page-title" data-i18n="ex_title">التمارين</h1>
       <div class="page-count" id="pageCount">— تمرين</div>
     </div>
     <div class="add-btn" id="addExBtn" style="cursor:pointer;">
@@ -146,25 +146,39 @@
     </div>
   </div>
 
+  <div class="glass active-program-banner" id="activeProgramBanner" style="display:none; align-items:center; gap:10px; padding:11px 14px; margin-bottom:14px;">
+    <div style="width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2563EB,#7C3AED);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+    </div>
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:10.5px;color:var(--text-dim);font-weight:700;" data-i18n="ex_active_program">البرنامج الحالي</div>
+      <div id="activeProgramName" style="font-size:13px;font-weight:800;">—</div>
+      <div id="activeProgramDays" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;"></div>
+    </div>
+    <a href="programs.html" data-i18n="ex_change_program" style="text-decoration:none;font-size:11px;font-weight:800;color:#93C5FD;background:rgba(147,197,253,0.12);padding:6px 10px;border-radius:12px;flex-shrink:0;">تغيير</a>
+  </div>
+
   <div class="glass search-bar">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-    <input type="text" id="searchInput" placeholder="دور على تمرين..." />
+    <input type="text" id="searchInput" placeholder="دور على تمرين..." data-i18n-ph="ex_search_ph" />
   </div>
 
   <div class="filters" id="filterBar">
-    <div class="chip active" data-muscle="all">الكل</div>
-    <div class="chip" data-muscle="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span>صدر</div>
-    <div class="chip" data-muscle="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span>ظهر</div>
-    <div class="chip" data-muscle="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span>أكتاف</div>
-    <div class="chip" data-muscle="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span>أرجل</div>
-    <div class="chip" data-muscle="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span>ذراعين</div>
-    <div class="chip" data-muscle="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span>بطن</div>
+    <div class="chip active" data-muscle="all" data-i18n="ex_filter_all">الكل</div>
+    <div class="chip" data-muscle="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span><span data-i18n="ex_filter_chest">صدر</span></div>
+    <div class="chip" data-muscle="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span><span data-i18n="ex_filter_back">ظهر</span></div>
+    <div class="chip" data-muscle="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span><span data-i18n="ex_filter_shoulders">أكتاف</span></div>
+    <div class="chip" data-muscle="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span><span data-i18n="ex_filter_legs">أرجل</span></div>
+    <div class="chip" data-muscle="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span><span data-i18n="ex_filter_arms">ذراعين</span></div>
+    <div class="chip" data-muscle="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span><span data-i18n="ex_filter_core">بطن</span></div>
   </div>
+
+  <div class="page-count" style="text-align:center;margin-bottom:8px;opacity:.7;" data-i18n="ex_delete_hint">اضغط مطوّل على أي تمرين لحذفه</div>
 
   <div id="exerciseList"></div>
 
   <div id="emptyState" style="display:none; text-align:center; padding:40px 20px; color:var(--text-dim);">
-    <p style="font-size:13px;">مفيش تمارين في القسم ده لسه.<br/>دوس على + فوق عشان تضيف تمرين جديد.</p>
+    <p style="font-size:13px;" data-i18n="ex_empty">مفيش تمارين في القسم ده لسه.<br/>دوس على + فوق عشان تضيف تمرين جديد.</p>
   </div>
 
 
@@ -174,19 +188,19 @@
   <div class="bottom-nav-inner">
     <a href="index.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10h14V10"/></svg>
-      الرئيسية
+      <span data-i18n="nav_home">الرئيسية</span>
     </a>
     <a href="exercises.html" class="nav-item active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
-      التمارين
+      <span data-i18n="nav_exercises">التمارين</span>
     </a>
     <a href="stats.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19v-8M16 19V9M22 19V3"/></svg>
-      الإحصائيات
+      <span data-i18n="nav_stats">الإحصائيات</span>
     </a>
     <a href="profile.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
-      حسابي
+      <span data-i18n="nav_profile">حسابي</span>
     </a>
   </div>
 </div>
@@ -195,12 +209,12 @@
 <div id="addExOverlay" style="position:fixed; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(3px); display:none; align-items:flex-end; z-index:100;">
   <div class="glass" style="width:100%; max-width:480px; margin:0 auto; border-radius:24px 24px 0 0; padding:20px; padding-bottom:calc(20px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto;">
     <div style="width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:4px;margin:0 auto 16px;"></div>
-    <h3 style="font-size:15px; font-weight:800; margin:0 0 16px;">إضافة تمرين جديد</h3>
+    <h3 style="font-size:15px; font-weight:800; margin:0 0 16px;" data-i18n="ex_add_title">إضافة تمرين جديد</h3>
 
-    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">اسم التمرين</label>
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_name_label">اسم التمرين</label>
     <input id="newExName" type="text" placeholder="مثال: سكوات بار" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
 
-    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">العضلة الأساسية</label>
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_muscle_label">العضلة الأساسية</label>
     <div id="muscleSelectRow" style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;">
       <div class="chip ms-opt active" data-m="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span>صدر</div>
       <div class="chip ms-opt" data-m="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span>ظهر</div>
@@ -210,23 +224,23 @@
       <div class="chip ms-opt" data-m="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span>بطن</div>
     </div>
 
-    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">عضلات مساعدة (اختياري)</label>
+    <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_secondary_label">عضلات مساعدة (اختياري)</label>
     <input id="newExSecondary" type="text" placeholder="مثال: ترايسبس" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
 
     <div style="display:flex; gap:10px; margin-bottom:16px;">
       <div style="flex:1;">
-        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">مجموعات</label>
+        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_sets_label">مجموعات</label>
         <input id="newExSets" type="number" value="3" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
       </div>
       <div style="flex:1;">
-        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">تكرارات</label>
+        <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_reps_label">تكرارات</label>
         <input id="newExReps" type="number" value="10" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
       </div>
     </div>
 
     <div style="display:flex; gap:10px;">
-      <div id="addExCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(255,255,255,0.05); border:1px solid var(--border-soft);">إلغاء</div>
-      <div id="addExSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);">إضافة التمرين</div>
+      <div id="addExCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(255,255,255,0.05); border:1px solid var(--border-soft);" data-i18n="ex_add_cancel">إلغاء</div>
+      <div id="addExSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);" data-i18n="ex_add_save">إضافة التمرين</div>
     </div>
   </div>
 </div>
@@ -251,7 +265,7 @@
     const setsLabel = last ? (last.sets + "×" + last.reps) : (ex.sets + "×" + ex.reps);
     const lastLabel = last ? ("آخر مرة " + last.weight + " كجم") : "لسه ما اتسجلش";
     return `
-    <a href="exercise-detail.html?id=${encodeURIComponent(ex.id)}" class="glass ex-card" style="text-decoration:none;color:inherit;">
+    <a href="exercise-detail.html?id=${encodeURIComponent(ex.id)}" class="glass ex-card" data-ex-id="${ex.id}" data-ex-name="${ex.name.replace(/"/g, '&quot;')}" style="text-decoration:none;color:inherit;">
       <div class="ex-thumb">${genericThumbSVG(meta.color)}</div>
       <div class="ex-info">
         <p class="ex-name">${ex.name}</p>
@@ -266,6 +280,60 @@
       </div>
       <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6"/></svg>
     </a>`;
+  }
+
+  // ===== Long-press to delete any exercise (flexible list, user's own choice) =====
+  (function setupLongPressDelete() {
+    let pressTimer = null;
+    let longPressFired = false;
+    let startX = 0, startY = 0;
+    const listEl = document.getElementById("exerciseList");
+
+    function cancelPress() {
+      if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+    }
+
+    function confirmDelete(card) {
+      const id = card.dataset.exId;
+      const name = card.dataset.exName;
+      const msg = store.getLang() === "en" ? `Delete "${name}"?` : `تحذف "${name}" نهائيًا من قائمة تمارينك؟`;
+      if (confirm(msg)) {
+        store.deleteExercise(id);
+        renderExercises();
+      }
+    }
+
+    listEl.addEventListener("pointerdown", (e) => {
+      const card = e.target.closest(".ex-card");
+      if (!card) return;
+      longPressFired = false;
+      startX = e.clientX; startY = e.clientY;
+      pressTimer = setTimeout(() => {
+        longPressFired = true;
+        if (navigator.vibrate) navigator.vibrate(25);
+        confirmDelete(card);
+      }, 550);
+    });
+    listEl.addEventListener("pointermove", (e) => {
+      if (!pressTimer) return;
+      if (Math.abs(e.clientX - startX) > 10 || Math.abs(e.clientY - startY) > 10) cancelPress();
+    });
+    ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => listEl.addEventListener(ev, cancelPress));
+    listEl.addEventListener("click", (e) => {
+      if (longPressFired) { e.preventDefault(); longPressFired = false; }
+    });
+  })();
+
+  // ===== Active program banner =====
+  function renderActiveProgramBanner() {
+    const active = store.getActiveProgram();
+    const banner = document.getElementById("activeProgramBanner");
+    if (!active) { banner.style.display = "none"; return; }
+    banner.style.display = "flex";
+    document.getElementById("activeProgramName").textContent = active.name;
+    document.getElementById("activeProgramDays").innerHTML = active.dayChips
+      .map((c) => `<span style="font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,0.06);color:var(--text-secondary);">${c}</span>`)
+      .join("");
   }
 
   function updateCount() {
@@ -368,7 +436,10 @@
     renderExercises();
   });
 
+  store.applyI18n();
+  renderActiveProgramBanner();
   renderExercises();
+  store.scheduleReminder();
 
   if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
 </script>

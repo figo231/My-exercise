@@ -245,19 +245,19 @@
   <div class="bottom-nav-inner">
     <a href="index.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10v10h14V10"/></svg>
-      الرئيسية
+      <span data-i18n="nav_home">الرئيسية</span>
     </a>
     <a href="exercises.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 2v4M16 2v4M4 10h16"/></svg>
-      التمارين
+      <span data-i18n="nav_exercises">التمارين</span>
     </a>
     <a href="stats.html" class="nav-item active">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M10 19v-8M16 19V9M22 19V3"/></svg>
-      الإحصائيات
+      <span data-i18n="nav_stats">الإحصائيات</span>
     </a>
     <a href="profile.html" class="nav-item">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
-      حسابي
+      <span data-i18n="nav_profile">حسابي</span>
     </a>
   </div>
 </div>
@@ -383,10 +383,12 @@
     renderSummary();
   });
 
+  window.GymakStore.applyI18n();
   renderChart();
   renderStrength();
   renderPRs();
   renderSummary();
+  window.GymakStore.scheduleReminder();
 
   if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); }
 </script>
