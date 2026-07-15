@@ -6,7 +6,7 @@
 <title>التمارين — جيمك</title>
 
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0B1120" />
+<meta name="theme-color" content="#F5F5F7" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 <link rel="icon" href="icon-192.png" />
@@ -14,12 +14,12 @@
 
 <style>
   :root{
-    --bg-deep:#0B1120;
-    --card-glass:rgba(255,255,255,0.045);
-    --border-soft:rgba(255,255,255,0.09);
-    --text-primary:#F8FAFC;
-    --text-secondary:#94A3B8;
-    --text-dim:#64748B;
+    --bg-deep:#F5F5F7;
+    --card-glass:rgba(255,255,255,0.55);
+    --border-soft:rgba(17,24,39,0.08);
+    --text-primary:#111827;
+    --text-secondary:#6B7280;
+    --text-dim:#9CA3AF;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg-deep);}
@@ -29,16 +29,16 @@
   .bg-ambient{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
     background:
-      radial-gradient(700px 420px at 12% -8%, rgba(37,99,235,0.32), transparent 60%),
-      radial-gradient(650px 500px at 105% 10%, rgba(124,58,237,0.28), transparent 60%),
+      radial-gradient(700px 420px at 12% -8%, rgba(255,107,44,0.20), transparent 60%),
+      radial-gradient(650px 500px at 105% 10%, rgba(255,148,87,0.20), transparent 60%),
       var(--bg-deep);
   }
   .app{max-width:480px; margin:0 auto; padding:16px 14px 100px;}
 
   .glass{
-    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:20px;
+    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:24px;
     backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
-    box-shadow:0 8px 26px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow:0 8px 26px rgba(17,24,39,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
     position:relative;
   }
 
@@ -48,7 +48,7 @@
   .page-count{font-size:11.5px; color:var(--text-dim); font-weight:600; margin-top:2px;}
   .add-btn{
     width:42px; height:42px; border-radius:14px; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg, #2563EB, #7C3AED); box-shadow:0 6px 18px rgba(37,99,235,0.35);
+    background:linear-gradient(135deg,#FF6B2C,#FF9457); box-shadow:0 6px 18px rgba(255,107,44,0.22);
   }
 
   /* ===== Search ===== */
@@ -71,12 +71,12 @@
   }
   .chip .dot{width:7px; height:7px; border-radius:50%; box-shadow:0 0 6px currentColor;}
   .chip.active{
-    color:#fff; background:linear-gradient(135deg, rgba(37,99,235,0.4), rgba(124,58,237,0.32));
-    border-color:rgba(147,197,253,0.3);
+    color:#FF6B2C; background:linear-gradient(135deg, rgba(255,107,44,0.22), rgba(255,148,87,0.22));
+    border-color:rgba(255,178,130,0.25);
   }
 
   /* muscle colors */
-  .m-chest{color:#3B82F6;} .m-back{color:#22C55E;} .m-shoulders{color:#A855F7;}
+  .m-chest{color:#FF7A3D;} .m-back{color:#22C55E;} .m-shoulders{color:#FFA35E;}
   .m-legs{color:#F59E0B;} .m-arms{color:#EC4899;} .m-core{color:#14B8A6;}
 
   /* ===== Exercise card ===== */
@@ -86,7 +86,7 @@
   .ex-thumb{
     width:52px; height:52px; border-radius:14px; flex-shrink:0;
     display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    background:radial-gradient(circle at 35% 30%, rgba(17,24,39,0.065), rgba(17,24,39,0.02));
     border:1px solid var(--border-soft);
   }
   .ex-thumb svg{width:26px; height:26px;}
@@ -96,8 +96,8 @@
   .badge{
     font-size:10px; font-weight:700; padding:2.5px 8px; border-radius:20px; display:inline-flex; align-items:center; gap:4px;
   }
-  .badge.primary{background:rgba(59,130,246,0.14); color:#93C5FD;}
-  .badge.secondary{background:rgba(255,255,255,0.06); color:var(--text-dim);}
+  .badge.primary{background:rgba(255,107,44,0.10); color:#FFC9A3;}
+  .badge.secondary{background:rgba(17,24,39,0.055); color:var(--text-dim);}
   .ex-meta{text-align:left; flex-shrink:0;}
   .ex-sets{font-size:11.5px; font-weight:800; color:var(--text-primary);}
   .ex-last{font-size:10px; color:var(--text-dim); margin-top:2px;}
@@ -120,8 +120,8 @@
   .bottom-nav-inner{
     max-width:480px; width:100%; display:flex; justify-content:space-between;
     background:rgba(20,27,46,0.75); border:1px solid var(--border-soft);
-    border-radius:22px; padding:8px 10px; backdrop-filter:blur(20px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.45);
+    border-radius:26px; padding:8px 10px; backdrop-filter:blur(20px);
+    box-shadow:0 10px 30px rgba(17,24,39,0.12);
   }
   .nav-item{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
@@ -129,7 +129,7 @@
     text-decoration:none;
   }
   .nav-item svg{width:21px; height:21px;}
-  .nav-item.active{color:#fff; background:linear-gradient(135deg, rgba(37,99,235,0.35), rgba(124,58,237,0.28));}
+  .nav-item.active{color:#FF6B2C; background:linear-gradient(135deg, rgba(255,107,44,0.22), rgba(255,148,87,0.20));}
 </style>
 </head>
 <body>
@@ -147,7 +147,7 @@
   </div>
 
   <div class="glass active-program-banner" id="activeProgramBanner" style="display:none; align-items:center; gap:10px; padding:11px 14px; margin-bottom:14px;">
-    <div style="width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2563EB,#7C3AED);">
+    <div style="width:34px;height:34px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#FF6B2C,#FF9457);">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
     </div>
     <div style="flex:1;min-width:0;">
@@ -155,7 +155,7 @@
       <div id="activeProgramName" style="font-size:13px;font-weight:800;">—</div>
       <div id="activeProgramDays" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px;"></div>
     </div>
-    <a href="programs.html" data-i18n="ex_change_program" style="text-decoration:none;font-size:11px;font-weight:800;color:#93C5FD;background:rgba(147,197,253,0.12);padding:6px 10px;border-radius:12px;flex-shrink:0;">تغيير</a>
+    <a href="programs.html" data-i18n="ex_change_program" style="text-decoration:none;font-size:11px;font-weight:800;color:#FFC9A3;background:rgba(147,197,253,0.12);padding:6px 10px;border-radius:12px;flex-shrink:0;">تغيير</a>
   </div>
 
   <div class="glass search-bar">
@@ -165,9 +165,9 @@
 
   <div class="filters" id="filterBar">
     <div class="chip active" data-muscle="all" data-i18n="ex_filter_all">الكل</div>
-    <div class="chip" data-muscle="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span><span data-i18n="ex_filter_chest">صدر</span></div>
+    <div class="chip" data-muscle="chest"><span class="dot" style="background:#FF7A3D;color:#FF7A3D"></span><span data-i18n="ex_filter_chest">صدر</span></div>
     <div class="chip" data-muscle="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span><span data-i18n="ex_filter_back">ظهر</span></div>
-    <div class="chip" data-muscle="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span><span data-i18n="ex_filter_shoulders">أكتاف</span></div>
+    <div class="chip" data-muscle="shoulders"><span class="dot" style="background:#FFA35E;color:#FFA35E"></span><span data-i18n="ex_filter_shoulders">أكتاف</span></div>
     <div class="chip" data-muscle="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span><span data-i18n="ex_filter_legs">أرجل</span></div>
     <div class="chip" data-muscle="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span><span data-i18n="ex_filter_arms">ذراعين</span></div>
     <div class="chip" data-muscle="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span><span data-i18n="ex_filter_core">بطن</span></div>
@@ -212,35 +212,35 @@
     <h3 style="font-size:15px; font-weight:800; margin:0 0 16px;" data-i18n="ex_add_title">إضافة تمرين جديد</h3>
 
     <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_name_label">اسم التمرين</label>
-    <input id="newExName" type="text" placeholder="مثال: سكوات بار" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
+    <input id="newExName" type="text" placeholder="مثال: سكوات بار" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
 
     <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_muscle_label">العضلة الأساسية</label>
     <div id="muscleSelectRow" style="display:flex; gap:7px; flex-wrap:wrap; margin-bottom:14px;">
-      <div class="chip ms-opt active" data-m="chest"><span class="dot" style="background:#3B82F6;color:#3B82F6"></span>صدر</div>
+      <div class="chip ms-opt active" data-m="chest"><span class="dot" style="background:#FF7A3D;color:#FF7A3D"></span>صدر</div>
       <div class="chip ms-opt" data-m="back"><span class="dot" style="background:#22C55E;color:#22C55E"></span>ظهر</div>
-      <div class="chip ms-opt" data-m="shoulders"><span class="dot" style="background:#A855F7;color:#A855F7"></span>أكتاف</div>
+      <div class="chip ms-opt" data-m="shoulders"><span class="dot" style="background:#FFA35E;color:#FFA35E"></span>أكتاف</div>
       <div class="chip ms-opt" data-m="legs"><span class="dot" style="background:#F59E0B;color:#F59E0B"></span>أرجل</div>
       <div class="chip ms-opt" data-m="arms"><span class="dot" style="background:#EC4899;color:#EC4899"></span>ذراعين</div>
       <div class="chip ms-opt" data-m="core"><span class="dot" style="background:#14B8A6;color:#14B8A6"></span>بطن</div>
     </div>
 
     <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_secondary_label">عضلات مساعدة (اختياري)</label>
-    <input id="newExSecondary" type="text" placeholder="مثال: ترايسبس" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
+    <input id="newExSecondary" type="text" placeholder="مثال: ترايسبس" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:14px; margin-bottom:14px;" />
 
     <div style="display:flex; gap:10px; margin-bottom:16px;">
       <div style="flex:1;">
         <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_sets_label">مجموعات</label>
-        <input id="newExSets" type="number" value="3" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
+        <input id="newExSets" type="number" value="3" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:14px;" />
       </div>
       <div style="flex:1;">
         <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="ex_add_reps_label">تكرارات</label>
-        <input id="newExReps" type="number" value="10" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:14px;" />
+        <input id="newExReps" type="number" value="10" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:14px;" />
       </div>
     </div>
 
     <div style="display:flex; gap:10px;">
-      <div id="addExCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(255,255,255,0.05); border:1px solid var(--border-soft);" data-i18n="ex_add_cancel">إلغاء</div>
-      <div id="addExSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);" data-i18n="ex_add_save">إضافة التمرين</div>
+      <div id="addExCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(17,24,39,0.045); border:1px solid var(--border-soft);" data-i18n="ex_add_cancel">إلغاء</div>
+      <div id="addExSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#FF6B2C,#FF9457);" data-i18n="ex_add_save">إضافة التمرين</div>
     </div>
   </div>
 </div>
@@ -332,7 +332,7 @@
     banner.style.display = "flex";
     document.getElementById("activeProgramName").textContent = active.name;
     document.getElementById("activeProgramDays").innerHTML = active.dayChips
-      .map((c) => `<span style="font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,0.06);color:var(--text-secondary);">${c}</span>`)
+      .map((c) => `<span style="font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:20px;background:rgba(17,24,39,0.055);color:var(--text-secondary);">${c}</span>`)
       .join("");
   }
 

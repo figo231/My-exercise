@@ -6,7 +6,7 @@
 <title>بنش برس بار — جيمك</title>
 
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0B1120" />
+<meta name="theme-color" content="#F5F5F7" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 <link rel="icon" href="icon-192.png" />
@@ -14,12 +14,12 @@
 
 <style>
   :root{
-    --bg-deep:#0B1120;
-    --card-glass:rgba(255,255,255,0.045);
-    --border-soft:rgba(255,255,255,0.09);
-    --text-primary:#F8FAFC;
-    --text-secondary:#94A3B8;
-    --text-dim:#64748B;
+    --bg-deep:#F5F5F7;
+    --card-glass:rgba(255,255,255,0.55);
+    --border-soft:rgba(17,24,39,0.08);
+    --text-primary:#111827;
+    --text-secondary:#6B7280;
+    --text-dim:#9CA3AF;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg-deep);}
@@ -29,8 +29,8 @@
   .bg-ambient{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
     background:
-      radial-gradient(700px 420px at 12% -8%, rgba(37,99,235,0.32), transparent 60%),
-      radial-gradient(650px 500px at 105% 10%, rgba(124,58,237,0.28), transparent 60%),
+      radial-gradient(700px 420px at 12% -8%, rgba(255,107,44,0.20), transparent 60%),
+      radial-gradient(650px 500px at 105% 10%, rgba(255,148,87,0.20), transparent 60%),
       var(--bg-deep);
   }
   .app{max-width:480px; margin:0 auto; padding:16px 14px 40px;}
@@ -38,22 +38,22 @@
   .top-bar{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
   .back-btn{
     width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background:rgba(255,255,255,0.045); border:1px solid var(--border-soft); flex-shrink:0;
+    background:rgba(255,255,255,0.55); border:1px solid var(--border-soft); flex-shrink:0;
   }
   .top-title{font-size:15.5px; font-weight:800;}
 
   .glass{
-    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:20px;
+    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:24px;
     backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
-    box-shadow:0 8px 26px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow:0 8px 26px rgba(17,24,39,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
   }
 
   /* ===== Media preview ===== */
   .media-frame{
-    height:220px; border-radius:22px; margin-bottom:16px; position:relative; overflow:hidden;
-    background:radial-gradient(circle at 30% 20%, rgba(37,99,235,0.22), transparent 60%),
-      radial-gradient(circle at 80% 80%, rgba(124,58,237,0.2), transparent 60%),
-      #101a30;
+    height:220px; border-radius:26px; margin-bottom:16px; position:relative; overflow:hidden;
+    background:radial-gradient(circle at 30% 20%, rgba(255,107,44,0.16), transparent 60%),
+      radial-gradient(circle at 80% 80%, rgba(255,148,87,0.16), transparent 60%),
+      #EDEDF0;
     display:flex; align-items:center; justify-content:center;
   }
   .media-play{
@@ -92,7 +92,7 @@
   .ex-eng{font-size:12px; color:var(--text-dim); font-weight:600;}
   .fav-btn{
     width:38px; height:38px; border-radius:13px; display:flex; align-items:center; justify-content:center;
-    background:rgba(255,255,255,0.045); border:1px solid var(--border-soft); flex-shrink:0;
+    background:rgba(255,255,255,0.55); border:1px solid var(--border-soft); flex-shrink:0;
   }
 
   /* ===== Muscle map ===== */
@@ -102,17 +102,17 @@
   .legend-dot{width:9px; height:9px; border-radius:50%; box-shadow:0 0 6px currentColor;}
   .muscle-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
   .m-tag{font-size:11.5px; font-weight:700; padding:6px 13px; border-radius:20px;}
-  .m-tag.primary{background:rgba(59,130,246,0.16); color:#93C5FD;}
-  .m-tag.secondary{background:rgba(255,255,255,0.06); color:var(--text-secondary);}
+  .m-tag.primary{background:rgba(255,107,44,0.12); color:#FFC9A3;}
+  .m-tag.secondary{background:rgba(17,24,39,0.055); color:var(--text-secondary);}
 
   /* ===== Section ===== */
   .section-title{font-size:14.5px; font-weight:800; margin:18px 4px 10px;}
   .steps-card{padding:6px 16px;}
   .step-row{display:flex; gap:12px; padding:13px 0;}
-  .step-row + .step-row{border-top:1px solid rgba(255,255,255,0.06);}
+  .step-row + .step-row{border-top:1px solid rgba(17,24,39,0.055);}
   .step-num{
     width:24px; height:24px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    font-size:11px; font-weight:800; background:linear-gradient(135deg,#2563EB,#7C3AED); color:#fff;
+    font-size:11px; font-weight:800; background:linear-gradient(135deg,#FF6B2C,#FF9457); color:#fff;
   }
   .step-txt{font-size:13px; line-height:1.6; color:var(--text-secondary); padding-top:1px;}
 
@@ -127,12 +127,12 @@
   /* ===== Log form ===== */
   .log-card{padding:16px; margin-top:16px;}
   .log-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;}
-  .log-field{background:rgba(255,255,255,0.04); border:1px solid var(--border-soft); border-radius:14px; padding:10px 12px;}
+  .log-field{background:rgba(17,24,39,0.035); border:1px solid var(--border-soft); border-radius:14px; padding:10px 12px;}
   .log-label{font-size:10px; color:var(--text-dim); font-weight:700; margin-bottom:3px;}
   .log-val{font-size:16px; font-weight:800;}
   .log-btn{
     text-align:center; padding:13px 0; font-size:13.5px; font-weight:800; color:#fff; border-radius:16px;
-    background:linear-gradient(135deg,#2563EB,#7C3AED); box-shadow:0 8px 20px rgba(37,99,235,0.3);
+    background:linear-gradient(135deg,#FF6B2C,#FF9457); box-shadow:0 8px 20px rgba(255,107,44,0.18);
   }
 </style>
 </head>
@@ -166,7 +166,7 @@
   <!-- ===== Muscles ===== -->
   <div class="glass muscle-card">
     <div class="muscle-legend">
-      <div class="legend-item"><span class="legend-dot" style="background:#3B82F6;color:#3B82F6"></span><span data-i18n="detail_muscles_primary">أساسية</span></div>
+      <div class="legend-item"><span class="legend-dot" style="background:#FF7A3D;color:#FF7A3D"></span><span data-i18n="detail_muscles_primary">أساسية</span></div>
       <div class="legend-item"><span class="legend-dot" style="background:#64748B;color:#64748B"></span><span data-i18n="detail_muscles_secondary">مساعدة</span></div>
     </div>
     <div class="muscle-tags" id="muscleTags">
@@ -217,14 +217,14 @@
     <div class="log-grid">
       <div class="log-field">
         <div class="log-label" id="logWeightLabel">الوزن (كجم)</div>
-        <input id="logWeight" type="number" step="0.5" inputmode="decimal" value="80" style="width:100%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+        <input id="logWeight" type="number" step="0.5" inputmode="decimal" value="80" style="width:100%; background:none; border:none; outline:none; color:#111827; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
       </div>
       <div class="log-field">
         <div class="log-label">مجموعات × تكرارات</div>
         <div style="display:flex; align-items:center; gap:4px;">
-          <input id="logSets" type="number" value="4" style="width:38%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+          <input id="logSets" type="number" value="4" style="width:38%; background:none; border:none; outline:none; color:#111827; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
           <span class="log-val" style="font-weight:400; color:var(--text-dim);">×</span>
-          <input id="logReps" type="number" value="8" style="width:38%; background:none; border:none; outline:none; color:#fff; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
+          <input id="logReps" type="number" value="8" style="width:38%; background:none; border:none; outline:none; color:#111827; font-family:'Cairo',sans-serif; font-size:16px; font-weight:800; padding:0;" />
         </div>
       </div>
     </div>

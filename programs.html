@@ -6,7 +6,7 @@
 <title>برامج التدريب — جيمك</title>
 
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0B1120" />
+<meta name="theme-color" content="#F5F5F7" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 <link rel="icon" href="icon-192.png" />
@@ -14,12 +14,12 @@
 
 <style>
   :root{
-    --bg-deep:#0B1120;
-    --card-glass:rgba(255,255,255,0.045);
-    --border-soft:rgba(255,255,255,0.09);
-    --text-primary:#F8FAFC;
-    --text-secondary:#94A3B8;
-    --text-dim:#64748B;
+    --bg-deep:#F5F5F7;
+    --card-glass:rgba(255,255,255,0.55);
+    --border-soft:rgba(17,24,39,0.08);
+    --text-primary:#111827;
+    --text-secondary:#6B7280;
+    --text-dim:#9CA3AF;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg-deep);}
@@ -29,8 +29,8 @@
   .bg-ambient{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
     background:
-      radial-gradient(700px 420px at 12% -8%, rgba(37,99,235,0.32), transparent 60%),
-      radial-gradient(650px 500px at 105% 10%, rgba(124,58,237,0.28), transparent 60%),
+      radial-gradient(700px 420px at 12% -8%, rgba(255,107,44,0.20), transparent 60%),
+      radial-gradient(650px 500px at 105% 10%, rgba(255,148,87,0.20), transparent 60%),
       var(--bg-deep);
   }
   .app{max-width:480px; margin:0 auto; padding:16px 14px 40px;}
@@ -38,24 +38,24 @@
   .top-bar{display:flex; align-items:center; gap:12px; margin-bottom:6px;}
   .back-btn{
     width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background:rgba(255,255,255,0.045); border:1px solid var(--border-soft); flex-shrink:0;
+    background:rgba(255,255,255,0.55); border:1px solid var(--border-soft); flex-shrink:0;
   }
   .page-title{font-size:18px; font-weight:900; margin:0;}
   .page-sub{font-size:11.5px; color:var(--text-dim); font-weight:600; margin-top:2px;}
 
   .glass{
-    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:20px;
+    background:var(--card-glass); border:1px solid var(--border-soft); border-radius:24px;
     backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
-    box-shadow:0 8px 26px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow:0 8px 26px rgba(17,24,39,0.08), inset 0 1px 0 rgba(255,255,255,0.7);
   }
 
   /* ===== Active program banner ===== */
   .active-banner{
     display:flex; align-items:center; gap:12px; padding:14px; margin:16px 0;
-    background:linear-gradient(120deg, rgba(37,99,235,0.16), rgba(124,58,237,0.12));
+    background:linear-gradient(120deg, rgba(255,107,44,0.12), rgba(255,148,87,0.10));
   }
   .active-ic{width:40px; height:40px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg,#2563EB,#7C3AED);}
+    background:linear-gradient(135deg,#FF6B2C,#FF9457);}
   .active-name{font-weight:800; font-size:13px;}
   .active-sub{font-size:11px; color:var(--text-secondary); margin-top:1px;}
 
@@ -75,17 +75,17 @@
   .prog-days{display:flex; gap:6px; margin-bottom:12px; flex-wrap:wrap;}
   .day-chip{
     font-size:10.5px; font-weight:700; padding:5px 10px; border-radius:20px;
-    background:rgba(255,255,255,0.05); color:var(--text-secondary);
+    background:rgba(17,24,39,0.045); color:var(--text-secondary);
   }
   .prog-desc{font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:14px;}
   .prog-actions{display:flex; gap:8px;}
   .btn-apply{
     flex:1; text-align:center; padding:10px 0; font-size:12.5px; font-weight:800; color:#fff; border-radius:14px;
-    background:linear-gradient(135deg,#2563EB,#7C3AED);
+    background:linear-gradient(135deg,#FF6B2C,#FF9457);
   }
   .btn-detail{
     padding:10px 16px; text-align:center; font-size:12.5px; font-weight:700; color:var(--text-secondary);
-    background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:14px;
+    background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:14px;
   }
 
   /* ===== Detail modal ===== */
@@ -95,7 +95,7 @@
   }
   .modal-backdrop.open{display:flex;}
   .detail-sheet{
-    width:100%; max-width:480px; background:#111A2E; border:1px solid var(--border-soft); border-bottom:none;
+    width:100%; max-width:480px; background:rgba(247,247,249,0.92); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border:1px solid rgba(17,24,39,0.06); border-bottom:none;
     border-radius:24px 24px 0 0; padding:10px 18px calc(20px + env(safe-area-inset-bottom));
     max-height:88vh; overflow-y:auto;
   }
@@ -105,16 +105,16 @@
   .detail-days-count{font-size:11px; color:var(--text-dim); font-weight:700; margin-top:3px;}
   .detail-section-label{font-size:11px; font-weight:800; color:var(--text-secondary); margin:16px 0 8px;}
   .detail-day-list{display:flex; flex-direction:column; gap:8px;}
-  .detail-day-row{display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px;}
-  .detail-day-num{width:22px; height:22px; border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:800; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);}
+  .detail-day-row{display:flex; align-items:center; gap:10px; padding:10px 12px; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px;}
+  .detail-day-num{width:22px; height:22px; border-radius:7px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:800; color:#fff; background:linear-gradient(135deg,#FF6B2C,#FF9457);}
   .detail-day-name{font-size:12.5px; font-weight:700;}
   .detail-desc{font-size:12.5px; color:var(--text-secondary); line-height:1.8;}
   .detail-actions{display:flex; gap:10px; margin-top:20px;}
   .detail-actions button{
     flex:1; padding:12px; border-radius:14px; border:none; cursor:pointer; font-family:inherit; font-size:13px; font-weight:800;
   }
-  #detailCloseBtn{background:rgba(255,255,255,0.06); color:var(--text-primary);}
-  #detailApplyBtn{background:linear-gradient(135deg,#2563EB,#7C3AED); color:#fff;}
+  #detailCloseBtn{background:rgba(17,24,39,0.055); color:var(--text-primary);}
+  #detailApplyBtn{background:linear-gradient(135deg,#FF6B2C,#FF9457); color:#fff;}
   #detailApplyBtn.applied{background:rgba(34,197,94,0.18); color:#4ADE80;}
 </style>
 </head>

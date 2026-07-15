@@ -6,9 +6,9 @@
 <title>جيمك</title>
 
 <link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0B1120" />
+<meta name="theme-color" content="#F5F5F7" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="جيمك" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 <link rel="icon" href="icon-192.png" />
@@ -16,16 +16,16 @@
 
 <style>
   :root{
-    --bg-deep:#0B1120;
-    --bg-deep-2:#0E1526;
-    --glow-blue:#2563EB;
-    --glow-purple:#7C3AED;
-    --card-glass:rgba(255,255,255,0.045);
-    --card-glass-strong:rgba(255,255,255,0.07);
-    --border-soft:rgba(255,255,255,0.09);
-    --text-primary:#F8FAFC;
-    --text-secondary:#94A3B8;
-    --text-dim:#64748B;
+    --bg-deep:#F5F5F7;
+    --bg-deep-2:#FFFFFF;
+    --glow-blue:#FF6B2C;
+    --glow-purple:#FF9457;
+    --card-glass:rgba(255,255,255,0.55);
+    --card-glass-strong:rgba(255,255,255,0.78);
+    --border-soft:rgba(17,24,39,0.08);
+    --text-primary:#111827;
+    --text-secondary:#6B7280;
+    --text-dim:#9CA3AF;
     --fire-1:#FBBF24;
     --fire-2:#F97316;
     --fire-3:#EF4444;
@@ -46,9 +46,9 @@
   .bg-ambient{
     position:fixed; inset:0; z-index:-1; pointer-events:none;
     background:
-      radial-gradient(700px 420px at 12% -8%, rgba(37,99,235,0.35), transparent 60%),
-      radial-gradient(650px 500px at 105% 10%, rgba(124,58,237,0.30), transparent 60%),
-      radial-gradient(900px 700px at 50% 115%, rgba(37,99,235,0.16), transparent 60%),
+      radial-gradient(700px 420px at 12% -8%, rgba(255,107,44,0.22), transparent 60%),
+      radial-gradient(650px 500px at 105% 10%, rgba(255,148,87,0.20), transparent 60%),
+      radial-gradient(900px 700px at 50% 115%, rgba(255,107,44,0.12), transparent 60%),
       var(--bg-deep);
   }
 
@@ -58,17 +58,17 @@
   .glass{
     background:var(--card-glass);
     border:1px solid var(--border-soft);
-    border-radius:22px;
+    border-radius:26px;
     backdrop-filter:blur(18px) saturate(140%);
     -webkit-backdrop-filter:blur(18px) saturate(140%);
-    box-shadow:0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+    box-shadow:0 8px 30px rgba(17,24,39,0.09), inset 0 1px 0 rgba(255,255,255,0.7);
     position:relative;
     overflow:hidden;
   }
   .glass::before{
     content:"";
     position:absolute; inset:0; border-radius:inherit; padding:1px;
-    background:linear-gradient(135deg, rgba(37,99,235,0.35), rgba(124,58,237,0.15) 40%, transparent 70%);
+    background:linear-gradient(135deg, rgba(255,107,44,0.22), rgba(255,148,87,0.12) 40%, transparent 70%);
     -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite:xor; mask-composite:exclude;
     pointer-events:none;
@@ -95,11 +95,11 @@
   .header-info{flex:1; min-width:0;}
   .header-name{font-weight:800; font-size:16px; margin:0 0 3px;}
   .header-sub{font-size:11.5px; color:var(--text-secondary); margin:0 0 7px; display:flex; align-items:center; gap:5px;}
-  .xp-track{height:7px; border-radius:20px; background:rgba(255,255,255,0.07); overflow:hidden; position:relative;}
+  .xp-track{height:7px; border-radius:20px; background:rgba(17,24,39,0.065); overflow:hidden; position:relative;}
   .xp-fill{
     height:100%; border-radius:20px;
     background:linear-gradient(90deg, var(--glow-blue), var(--glow-purple));
-    box-shadow:0 0 12px rgba(124,58,237,0.6);
+    box-shadow:0 0 12px rgba(255,148,87,0.35);
     transition:width .6s cubic-bezier(.22,1,.36,1);
   }
   .header-icon-btn{
@@ -131,11 +131,11 @@
   .streak-week{display:flex; gap:4px; margin-top:9px;}
   .sw-day{
     flex:1; text-align:center; font-size:10px; font-weight:700; color:var(--text-dim);
-    background:rgba(255,255,255,0.05); border-radius:8px; padding:4px 0;
+    background:rgba(17,24,39,0.045); border-radius:8px; padding:4px 0;
   }
   .sw-day.on{color:#FDBA74; background:rgba(249,115,22,0.16); box-shadow:inset 0 0 0 1px rgba(249,115,22,0.25);}
   .streak-record{
-    text-align:center; padding:0 2px 0 14px; border-right:1px solid rgba(255,255,255,0.08); flex-shrink:0;
+    text-align:center; padding:0 2px 0 14px; border-right:1px solid rgba(17,24,39,0.075); flex-shrink:0;
   }
   .rec-num{display:block; font-size:19px; font-weight:900; font-family:'Cairo',sans-serif; color:var(--text-primary);}
   .rec-txt{display:block; font-size:9.5px; color:var(--text-dim); font-weight:700; margin-top:2px; white-space:nowrap;}
@@ -162,7 +162,7 @@
     margin:22px 4px 12px;
   }
   .section-title h2{font-size:15.5px; font-weight:800; margin:0;}
-  .section-title a{font-size:12px; color:#93C5FD; text-decoration:none; font-weight:700;}
+  .section-title a{font-size:12px; color:#FFC9A3; text-decoration:none; font-weight:700;}
 
   /* ===== InBody mini grid ===== */
   .inbody-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:9px;}
@@ -182,8 +182,8 @@
   /* ===== Muscle indicator dots ===== */
   .muscle-dot{width:9px; height:9px; border-radius:50%; flex-shrink:0; display:inline-block;
     box-shadow:0 0 8px currentColor;}
-  .muscle-dot.chest{background:#3B82F6; color:#3B82F6;}
-  .muscle-dot.shoulders{background:#A855F7; color:#A855F7;}
+  .muscle-dot.chest{background:#FF7A3D; color:#FF7A3D;}
+  .muscle-dot.shoulders{background:#FFA35E; color:#FFA35E;}
   .muscle-dot.back{background:#22C55E; color:#22C55E;}
   .muscle-dot.legs{background:#F59E0B; color:#F59E0B;}
   .muscle-dot.arms{background:#EC4899; color:#EC4899;}
@@ -191,13 +191,13 @@
 
   /* ===== Plan rows ===== */
   .plan-row{display:flex; align-items:center; justify-content:space-between; padding:11px 0;}
-  .plan-row + .plan-row{border-top:1px solid rgba(255,255,255,0.06);}
+  .plan-row + .plan-row{border-top:1px solid rgba(17,24,39,0.055);}
   .plan-info{display:flex; align-items:center; gap:11px;}
   .plan-name{font-weight:700; font-size:13.5px;}
   .plan-sub{font-size:11px; color:var(--text-dim); margin-top:1px;}
-  .plan-weight{font-size:12px; font-weight:800; color:#93C5FD;}
+  .plan-weight{font-size:12px; font-weight:800; color:#FFC9A3;}
   .plan-tag{
-    font-size:10.5px; font-weight:700; color:#C4B5FD; background:rgba(124,58,237,0.15);
+    font-size:10.5px; font-weight:700; color:#FFD3B0; background:rgba(255,148,87,0.12);
     padding:2px 9px; border-radius:20px; margin-right:8px; vertical-align:middle;
   }
 
@@ -210,8 +210,8 @@
   .bottom-nav-inner{
     max-width:480px; width:100%; display:flex; justify-content:space-between;
     background:rgba(20,27,46,0.75); border:1px solid var(--border-soft);
-    border-radius:22px; padding:8px 10px; backdrop-filter:blur(20px);
-    box-shadow:0 10px 30px rgba(0,0,0,0.45);
+    border-radius:26px; padding:8px 10px; backdrop-filter:blur(20px);
+    box-shadow:0 10px 30px rgba(17,24,39,0.12);
   }
   .nav-item{
     flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
@@ -220,8 +220,8 @@
   }
   .nav-item svg{width:21px; height:21px;}
   .nav-item.active{
-    color:#fff;
-    background:linear-gradient(135deg, rgba(37,99,235,0.35), rgba(124,58,237,0.28));
+    color:#FF6B2C;
+    background:linear-gradient(135deg, rgba(255,107,44,0.22), rgba(255,148,87,0.20));
   }
 
   /* utility */
@@ -305,11 +305,11 @@
 
     <div class="side-actions">
       <a href="exercises.html" class="glass qa-tile" style="text-decoration:none;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#BFDBFE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7v10M18 7v10M2 10v4M22 10v4M6 12h12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFD9BE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7v10M18 7v10M2 10v4M22 10v4M6 12h12"/></svg>
         <span data-i18n="home_log_exercise">تسجيل تمرين</span>
       </a>
       <div class="glass qa-tile" id="logWeightBtn" style="cursor:pointer;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#DDD6FE" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 8v4l3 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FFE0C7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 8v4l3 2"/></svg>
         <span data-i18n="home_log_weight">تسجيل وزن</span>
       </div>
     </div>
@@ -376,16 +376,16 @@
     <div style="display:flex; gap:10px; margin-bottom:14px;">
       <div style="flex:1;">
         <label id="weightInputLabel" style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;">الوزن (كجم)</label>
-        <input id="weightInput" type="number" step="0.1" inputmode="decimal" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700;" />
+        <input id="weightInput" type="number" step="0.1" inputmode="decimal" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700;" />
       </div>
       <div style="flex:1;">
         <label style="font-size:11px; color:var(--text-dim); font-weight:700; display:block; margin-bottom:6px;" data-i18n="home_body_fat_optional">نسبة الدهون % (اختياري)</label>
-        <input id="bodyFatInput" type="number" step="0.1" inputmode="decimal" style="width:100%; box-sizing:border-box; background:rgba(255,255,255,0.05); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#fff; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700;" />
+        <input id="bodyFatInput" type="number" step="0.1" inputmode="decimal" style="width:100%; box-sizing:border-box; background:rgba(17,24,39,0.045); border:1px solid var(--border-soft); border-radius:12px; padding:11px 12px; color:#111827; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700;" />
       </div>
     </div>
     <div style="display:flex; gap:10px;">
-      <div id="weightModalCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(255,255,255,0.05); border:1px solid var(--border-soft);" data-i18n="home_cancel">إلغاء</div>
-      <div id="weightModalSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#2563EB,#7C3AED);" data-i18n="home_save">حفظ</div>
+      <div id="weightModalCancel" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:700; font-size:13px; color:var(--text-secondary); background:rgba(17,24,39,0.045); border:1px solid var(--border-soft);" data-i18n="home_cancel">إلغاء</div>
+      <div id="weightModalSave" style="flex:1; text-align:center; padding:12px 0; border-radius:14px; font-weight:800; font-size:13px; color:#fff; background:linear-gradient(135deg,#FF6B2C,#FF9457);" data-i18n="home_save">حفظ</div>
     </div>
   </div>
 </div>
